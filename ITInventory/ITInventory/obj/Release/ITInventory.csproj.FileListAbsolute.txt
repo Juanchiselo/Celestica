@@ -1,0 +1,11 @@
+C:\Users\juanc\documents\visual studio 2015\Projects\ITInventory\ITInventory\bin\Release\ITInventory.exe.config
+C:\Users\juanc\documents\visual studio 2015\Projects\ITInventory\ITInventory\bin\Release\ITInventory.exe
+C:\Users\juanc\documents\visual studio 2015\Projects\ITInventory\ITInventory\bin\Release\ITInventory.pdb
+C:\Users\juanc\documents\visual studio 2015\Projects\ITInventory\ITInventory\obj\Release\ITInventory.csprojResolveAssemblyReference.cache
+C:\Users\juanc\documents\visual studio 2015\Projects\ITInventory\ITInventory\obj\Release\ITInventory.Form1.resources
+C:\Users\juanc\documents\visual studio 2015\Projects\ITInventory\ITInventory\obj\Release\ITInventory.frmCommentHistory.resources
+C:\Users\juanc\documents\visual studio 2015\Projects\ITInventory\ITInventory\obj\Release\ITInventory.Properties.Resources.resources
+C:\Users\juanc\documents\visual studio 2015\Projects\ITInventory\ITInventory\obj\Release\ITInventory.FrmRemoveStation.resources
+C:\Users\juanc\documents\visual studio 2015\Projects\ITInventory\ITInventory\obj\Release\ITInventory.csproj.GenerateResource.Cache
+C:\Users\juanc\documents\visual studio 2015\Projects\ITInventory\ITInventory\obj\Release\ITInventory.exe
+C:\Users\juanc\documents\visual studio 2015\Projects\ITInventory\ITInventory\obj\Release\ITInventory.pdb
