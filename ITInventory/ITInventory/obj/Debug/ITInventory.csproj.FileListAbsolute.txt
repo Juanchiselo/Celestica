@@ -16,3 +16,21 @@ C:\Users\juanc\documents\visual studio 2015\Projects\ITInventory\ITInventory\obj
 C:\Users\juanc\documents\visual studio 2015\Projects\ITInventory\ITInventory\obj\Debug\ITInventory.FrmSearch.resources
 C:\Users\juanc\documents\visual studio 2015\Projects\ITInventory\ITInventory\obj\Debug\ITInventory.FrmLogin.resources
 C:\Users\juanc\documents\visual studio 2015\Projects\ITInventory\ITInventory\obj\Debug\ITInventory.MainForm.resources
+C:\Users\juanc\Documents\GitHub\Celestica_ITInventory\ITInventory\ITInventory\bin\Debug\ITInventory.exe.config
+C:\Users\juanc\Documents\GitHub\Celestica_ITInventory\ITInventory\ITInventory\obj\Debug\ITInventory.exe
+C:\Users\juanc\Documents\GitHub\Celestica_ITInventory\ITInventory\ITInventory\obj\Debug\ITInventory.pdb
+C:\Users\juanc\Documents\GitHub\Celestica_ITInventory\ITInventory\ITInventory\bin\Debug\ITInventory.exe
+C:\Users\juanc\Documents\GitHub\Celestica_ITInventory\ITInventory\ITInventory\bin\Debug\ITInventory.pdb
+C:\Users\juanc\Documents\GitHub\Celestica_ITInventory\ITInventory\ITInventory\bin\Debug\MySql.Data.dll
+C:\Users\juanc\Documents\GitHub\Celestica_ITInventory\ITInventory\ITInventory\obj\Debug\ITInventory.csprojResolveAssemblyReference.cache
+C:\Users\juanc\Documents\GitHub\Celestica_ITInventory\ITInventory\ITInventory\obj\Debug\ITInventory.frmUsers.resources
+C:\Users\juanc\Documents\GitHub\Celestica_ITInventory\ITInventory\ITInventory\obj\Debug\ITInventory.MainForm.resources
+C:\Users\juanc\Documents\GitHub\Celestica_ITInventory\ITInventory\ITInventory\obj\Debug\ITInventory.frmCommentHistory.resources
+C:\Users\juanc\Documents\GitHub\Celestica_ITInventory\ITInventory\ITInventory\obj\Debug\ITInventory.FrmCheckAssetTag.resources
+C:\Users\juanc\Documents\GitHub\Celestica_ITInventory\ITInventory\ITInventory\obj\Debug\ITInventory.FrmComment.resources
+C:\Users\juanc\Documents\GitHub\Celestica_ITInventory\ITInventory\ITInventory\obj\Debug\ITInventory.FrmLogin.resources
+C:\Users\juanc\Documents\GitHub\Celestica_ITInventory\ITInventory\ITInventory\obj\Debug\ITInventory.FrmSearch.resources
+C:\Users\juanc\Documents\GitHub\Celestica_ITInventory\ITInventory\ITInventory\obj\Debug\ITInventory.FrmViewDatabase.resources
+C:\Users\juanc\Documents\GitHub\Celestica_ITInventory\ITInventory\ITInventory\obj\Debug\ITInventory.Properties.Resources.resources
+C:\Users\juanc\Documents\GitHub\Celestica_ITInventory\ITInventory\ITInventory\obj\Debug\ITInventory.FrmParameters.resources
+C:\Users\juanc\Documents\GitHub\Celestica_ITInventory\ITInventory\ITInventory\obj\Debug\ITInventory.csproj.GenerateResource.Cache

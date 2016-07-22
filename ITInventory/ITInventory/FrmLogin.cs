@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Security.Cryptography;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace ITInventory
 {
@@ -12,6 +13,11 @@ namespace ITInventory
     {
         MD5 md5 = MD5.Create();
         User user;
+        string localUsername = "administrator";
+        string localPassword = "##2fun4cls";
+        List<string> sites;
+        string domain = "";
+        DataTable dataTable = null;
 
         public FrmLogin()
         {
@@ -20,43 +26,67 @@ namespace ITInventory
 
         private void GetSites()
         {
-            List<string> sites = ActiveDirectory.ListOU(cboDomain.Text);
-
-            for (int i = 0; i < sites.Count; i++)
-                cboSite.Items.Add(sites[i]);
+            sites = ActiveDirectory.ListOU(domain);            
         }
 
-        // Clicks the Login button whenever the "Enter" key
-        // has been released.
-        private void txtPassword_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-                btnLogin.PerformClick();
-        }
 
         // Executes when the login button is clicked.
         // It connects to the database and checks if the user exists.
         private void btnLogin_Click(object sender, EventArgs e)
         {
+            bwLogin.RunWorkerAsync();
 
-            if (ActiveDirectory.Instance.Authenticate(txtUsername.Text, txtPassword.Text, cboDomain.Text))
-            {
+           
+        }
 
-            }
+        private void cboDomain_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+            
+        }
+
+        private void bwSites_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+
+            if (worker.CancellationPending == true)
+                e.Cancel = true;
             else
-            {
-                MessageBox.Show("Intruder, intruder! Self-destruct sequence initiated!");
-            }
+                GetSites();                
+        }
 
+        private void bwSites_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            for (int i = 0; i < sites.Count; i++)
+                cboSite.Items.Add(sites[i]);
+        }
 
-            DataTable dataTable = DBConnection.Instance.Select("SELECT * FROM tbluser "
-                + "WHERE username='" + txtUsername.Text + "' AND password='"
+        private void FrmLogin_Load(object sender, EventArgs e)
+        {
+            cboDomain.SelectedIndex = 0;
+            domain = cboDomain.Text;
+            bwSites.RunWorkerAsync();
+        }
+
+        private void FrmLogin_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            bwSites.CancelAsync();
+        }
+
+        private void bwLogin_DoWork(object sender, DoWorkEventArgs e)
+        {
+            dataTable = DBConnection.Instance.Select("SELECT * FROM tbluser "
+                    + "WHERE username='" + txtUsername.Text + "' AND password='"
                 + BitConverter.ToString(md5.ComputeHash(Encoding.UTF8.GetBytes(txtPassword.Text))).Replace("-", "")
                 + "';");
+        }
 
-            if ((dataTable.Rows.Count != 0)
-                || (txtUsername.Text.Equals("Administrator")
-                && txtPassword.Text.Equals("##2fun4cls")))
+        private void bwLogin_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (ActiveDirectory.Instance.Authenticate(txtUsername.Text, txtPassword.Text, cboDomain.Text)
+               || dataTable.Rows.Count != 0
+               || (txtUsername.Text.Equals(localUsername)
+               && (txtPassword.Text.Equals(localPassword))))
             {
                 if (dataTable.Rows.Count != 0)
                 {
@@ -69,34 +99,26 @@ namespace ITInventory
                 }
                 else
                 {
-                    user = new User(txtUsername.Text, "Administrator", "Celestica",
-                         "##2fun4cls", true, 0);
+                    user = new User(txtUsername.Text, localUsername, "Celestica",
+                         localPassword, true, 0);
                 }
-
-
-
-                if (user.IsAdmin)
-                {
-                    //mnuDatabase.Visible = true;
-                    //mnuPreventiveMaintenance.Visible = false;
-                }
-
-
 
                 MainForm frmAdd = new MainForm();
                 frmAdd.user = user;
                 frmAdd.lblUsername.Text = user.FirstName + " " + user.LastName;
+
+                if (user.IsAdmin)
+                {
+                    frmAdd.mnuDatabase.Visible = true;
+                    //frmAdd.mnuPreventiveMaintenance.Visible = false;
+                }
+
                 this.Hide();
                 frmAdd.ShowDialog();
                 this.Close();
             }
             else
                 MessageBox.Show("ERROR: Wrong username or password.");
-        }
-
-        private void cboDomain_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            GetSites();
         }
     }
 }

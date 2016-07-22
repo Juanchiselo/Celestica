@@ -33,6 +33,7 @@
             this.mnuMain = new System.Windows.Forms.MainMenu(this.components);
             this.mnuInventory = new System.Windows.Forms.MenuItem();
             this.mnuAdd = new System.Windows.Forms.MenuItem();
+            this.mnuBulkAdd = new System.Windows.Forms.MenuItem();
             this.mnuView = new System.Windows.Forms.MenuItem();
             this.mnuCheckAssetTag = new System.Windows.Forms.MenuItem();
             this.mnuSearch = new System.Windows.Forms.MenuItem();
@@ -43,7 +44,6 @@
             this.mnuParameters = new System.Windows.Forms.MenuItem();
             this.mnuAddParameter = new System.Windows.Forms.MenuItem();
             this.mnuEditParameter = new System.Windows.Forms.MenuItem();
-            this.mnuBulkAdd = new System.Windows.Forms.MenuItem();
             this.tabMenus = new ITInventory.TablessControl();
             this.tabAdd = new System.Windows.Forms.TabPage();
             this.btnUpdate = new System.Windows.Forms.Button();
@@ -122,6 +122,13 @@
             this.mnuAdd.Text = "Add Asset";
             this.mnuAdd.Click += new System.EventHandler(this.mnuAdd_Click);
             // 
+            // mnuBulkAdd
+            // 
+            this.mnuBulkAdd.Index = 1;
+            this.mnuBulkAdd.Shortcut = System.Windows.Forms.Shortcut.CtrlShiftB;
+            this.mnuBulkAdd.Text = "Bulk Add";
+            this.mnuBulkAdd.Click += new System.EventHandler(this.mnuBulkAdd_Click);
+            // 
             // mnuView
             // 
             this.mnuView.Index = 2;
@@ -193,13 +200,6 @@
             this.mnuEditParameter.Text = "Edit Parameter";
             this.mnuEditParameter.Visible = false;
             this.mnuEditParameter.Click += new System.EventHandler(this.mnuRemoveParameter_Click);
-            // 
-            // mnuBulkAdd
-            // 
-            this.mnuBulkAdd.Index = 1;
-            this.mnuBulkAdd.Shortcut = System.Windows.Forms.Shortcut.CtrlShiftB;
-            this.mnuBulkAdd.Text = "Bulk Add";
-            this.mnuBulkAdd.Click += new System.EventHandler(this.mnuBulkAdd_Click);
             // 
             // tabMenus
             // 
@@ -765,7 +765,7 @@
             // MainForm
             // 
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(928, 658);
+            this.ClientSize = new System.Drawing.Size(928, 678);
             this.Controls.Add(this.tabMenus);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -786,7 +786,6 @@
 
         #endregion
         private System.Windows.Forms.MainMenu mnuMain;
-        private System.Windows.Forms.MenuItem mnuInventory;
         private System.Windows.Forms.TabPage tabPreventiveMaintenance;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.TextBox textBox3;
@@ -815,7 +814,6 @@
         private System.Windows.Forms.Label lblPCID;
         private System.Windows.Forms.PictureBox pictureBox1;
         private TablessControl tabMenus;
-        private System.Windows.Forms.MenuItem mnuDatabase;
         private System.Windows.Forms.MenuItem menuItem11;
         private System.Windows.Forms.MenuItem mnuCreateUser;
         private System.Windows.Forms.MenuItem mnuEditUser;
@@ -847,6 +845,8 @@
         public System.Windows.Forms.Button btnComment;
         public System.Windows.Forms.Button btnAutoCollect;
         private System.Windows.Forms.MenuItem mnuBulkAdd;
+        public System.Windows.Forms.MenuItem mnuInventory;
+        public System.Windows.Forms.MenuItem mnuDatabase;
     }
 }
 

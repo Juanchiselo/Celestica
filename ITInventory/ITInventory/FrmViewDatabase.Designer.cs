@@ -187,6 +187,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmViewDatabase";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "View Inventory";
             this.Load += new System.EventHandler(this.FrmViewDatabase_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
