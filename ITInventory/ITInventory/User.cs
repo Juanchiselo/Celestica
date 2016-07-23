@@ -11,18 +11,16 @@ namespace ITInventory
         private string username;
         private string firstName;
         private string lastName;
-        private string password;
         private bool isAdmin;
         private int id;
 
         public User(string username, string firstName,
-            string lastName, string password, bool isAdmin,
+            string lastName, bool isAdmin,
             int id)
         {
             this.username = username;
             this.firstName = firstName;
             this.lastName = lastName;
-            this.password = password;
             this.isAdmin = isAdmin;
             this.id = id;
         }
@@ -50,13 +48,7 @@ namespace ITInventory
             get { return lastName;}
             set { lastName = value; }
         }
-
-        public string Password
-        {
-            get { return password; }
-            set { password = value; }
-        }
-
+        
         public bool IsAdmin
         {
             get { return isAdmin; }

@@ -515,6 +515,12 @@ namespace ITInventory
             bulkAdd = true;
             lblTitle.Text = "Bulk Add";
         }
+
+        private void mnuDatabaseSetUp_Click(object sender, EventArgs e)
+        {
+            FrmDatabaseSetUp frmDatabaseSetUp = new FrmDatabaseSetUp();
+            frmDatabaseSetUp.ShowDialog();
+        }
     }
 
     public class TablessControl : TabControl

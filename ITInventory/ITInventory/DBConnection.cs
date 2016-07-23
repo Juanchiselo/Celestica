@@ -238,4 +238,9 @@ public sealed class DBConnection
 
         return bindingSource;
     }
+
+    public bool DoesDatabaseExist()
+    {
+        return OpenConnection();
+    }
 }

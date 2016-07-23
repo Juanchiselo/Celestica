@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.DirectoryServices;
 using System.Windows.Forms;
+using System.Collections;
 
 namespace ITInventory
 {
@@ -20,12 +21,51 @@ namespace ITInventory
                 return instance;
             }
         }
+
+        private string CreateLDAPPath(string domain, string site)
+        {
+            string path = "LDAP://" + domain + "/OU=Users,OU=" + site
+                + ",DC=americas,DC=ad,DC=celestica,DC=com";
+
+            return path;
+        }
+
+        public void GetUserInformation(string username, string domain, string site)
+        {
+            DirectoryEntry entry = new DirectoryEntry();
+            entry.Path = CreateLDAPPath(domain, site);
+            entry.AuthenticationType = AuthenticationTypes.Secure;
+
+            DirectorySearcher searcher = new DirectorySearcher(entry);
+            searcher.SearchRoot = entry;
+            searcher.Filter = "(&(objectCategory=person)(objectClass=user)(sAMAccountName=" + username + "))";
+
+            searcher.PropertiesToLoad.Add("givenname");
+            searcher.PropertiesToLoad.Add("sn");
+
+            SearchResult result = searcher.FindOne();
+
+            if (result != null)
+            {
+                MessageBox.Show(result.Properties["givenname"][0].ToString());
+                MessageBox.Show(result.Properties["sn"][0].ToString());
+            }
+            else
+            {
+                MessageBox.Show("Not found");
+                return;
+            }
+
+            
+
+            entry.Dispose();
+            searcher.Dispose();
+        }
        
         public bool Authenticate(string username,
             string password, string domain)
         {
             bool authentic = false;
-
             try
             {
                 DirectoryEntry entry = new DirectoryEntry("LDAP://" + domain,

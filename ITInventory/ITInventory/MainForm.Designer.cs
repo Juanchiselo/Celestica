@@ -44,6 +44,7 @@
             this.mnuParameters = new System.Windows.Forms.MenuItem();
             this.mnuAddParameter = new System.Windows.Forms.MenuItem();
             this.mnuEditParameter = new System.Windows.Forms.MenuItem();
+            this.mnuDatabaseSetUp = new System.Windows.Forms.MenuItem();
             this.tabMenus = new ITInventory.TablessControl();
             this.tabAdd = new System.Windows.Forms.TabPage();
             this.btnUpdate = new System.Windows.Forms.Button();
@@ -154,6 +155,7 @@
             // 
             this.mnuDatabase.Index = 1;
             this.mnuDatabase.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mnuDatabaseSetUp,
             this.menuItem11,
             this.mnuParameters});
             this.mnuDatabase.Text = "Database";
@@ -161,7 +163,7 @@
             // 
             // menuItem11
             // 
-            this.menuItem11.Index = 0;
+            this.menuItem11.Index = 1;
             this.menuItem11.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.mnuCreateUser,
             this.mnuEditUser});
@@ -182,7 +184,7 @@
             // 
             // mnuParameters
             // 
-            this.mnuParameters.Index = 1;
+            this.mnuParameters.Index = 2;
             this.mnuParameters.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.mnuAddParameter,
             this.mnuEditParameter});
@@ -200,6 +202,12 @@
             this.mnuEditParameter.Text = "Edit Parameter";
             this.mnuEditParameter.Visible = false;
             this.mnuEditParameter.Click += new System.EventHandler(this.mnuRemoveParameter_Click);
+            // 
+            // mnuDatabaseSetUp
+            // 
+            this.mnuDatabaseSetUp.Index = 0;
+            this.mnuDatabaseSetUp.Text = "Set Up";
+            this.mnuDatabaseSetUp.Click += new System.EventHandler(this.mnuDatabaseSetUp_Click);
             // 
             // tabMenus
             // 
@@ -563,9 +571,9 @@
             this.tabPreventiveMaintenance.Controls.Add(this.label13);
             this.tabPreventiveMaintenance.Controls.Add(this.label14);
             this.tabPreventiveMaintenance.Controls.Add(this.lblUsernameGoal);
-            this.tabPreventiveMaintenance.Location = new System.Drawing.Point(4, 38);
+            this.tabPreventiveMaintenance.Location = new System.Drawing.Point(4, 29);
             this.tabPreventiveMaintenance.Name = "tabPreventiveMaintenance";
-            this.tabPreventiveMaintenance.Size = new System.Drawing.Size(958, 658);
+            this.tabPreventiveMaintenance.Size = new System.Drawing.Size(958, 667);
             this.tabPreventiveMaintenance.TabIndex = 2;
             this.tabPreventiveMaintenance.Text = "Preventive Maintenance";
             this.tabPreventiveMaintenance.UseVisualStyleBackColor = true;
@@ -765,7 +773,7 @@
             // MainForm
             // 
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(928, 678);
+            this.ClientSize = new System.Drawing.Size(928, 706);
             this.Controls.Add(this.tabMenus);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -847,6 +855,7 @@
         private System.Windows.Forms.MenuItem mnuBulkAdd;
         public System.Windows.Forms.MenuItem mnuInventory;
         public System.Windows.Forms.MenuItem mnuDatabase;
+        private System.Windows.Forms.MenuItem mnuDatabaseSetUp;
     }
 }
 

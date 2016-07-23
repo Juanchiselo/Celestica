@@ -34,9 +34,8 @@ namespace ITInventory
         // It connects to the database and checks if the user exists.
         private void btnLogin_Click(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
             bwLogin.RunWorkerAsync();
-
-           
         }
 
         private void cboDomain_SelectedIndexChanged(object sender, EventArgs e)
@@ -63,6 +62,7 @@ namespace ITInventory
 
         private void FrmLogin_Load(object sender, EventArgs e)
         {
+            
             cboDomain.SelectedIndex = 0;
             domain = cboDomain.Text;
             bwSites.RunWorkerAsync();
@@ -76,13 +76,13 @@ namespace ITInventory
         private void bwLogin_DoWork(object sender, DoWorkEventArgs e)
         {
             dataTable = DBConnection.Instance.Select("SELECT * FROM tbluser "
-                    + "WHERE username='" + txtUsername.Text + "' AND password='"
-                + BitConverter.ToString(md5.ComputeHash(Encoding.UTF8.GetBytes(txtPassword.Text))).Replace("-", "")
-                + "';");
+                    + "WHERE username='" + txtUsername.Text + "';");
         }
 
         private void bwLogin_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            //ActiveDirectory.Instance.GetUserInformation(txtUsername.Text, cboDomain.Text, cboSite.Text);
+
             if (ActiveDirectory.Instance.Authenticate(txtUsername.Text, txtPassword.Text, cboDomain.Text)
                || dataTable.Rows.Count != 0
                || (txtUsername.Text.Equals(localUsername)
@@ -94,13 +94,12 @@ namespace ITInventory
 
                     // Creates an user object.
                     user = new User(data["username"].ToString(), data["firstName"].ToString(),
-                        data["lastName"].ToString(), data["password"].ToString(), (bool)data["isAdmin"],
+                        data["lastName"].ToString(), (bool)data["isAdmin"],
                         (int)data["userID"]);
                 }
                 else
                 {
-                    user = new User(txtUsername.Text, localUsername, "Celestica",
-                         localPassword, true, 0);
+                    user = new User(txtUsername.Text, localUsername, "Celestica", true, 0);
                 }
 
                 MainForm frmAdd = new MainForm();
@@ -118,7 +117,10 @@ namespace ITInventory
                 this.Close();
             }
             else
+            {
+                this.Cursor = Cursors.Default;
                 MessageBox.Show("ERROR: Wrong username or password.");
+            }
         }
     }
 }
