@@ -41,7 +41,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cboSite = new System.Windows.Forms.ComboBox();
             this.bwLogin = new System.ComponentModel.BackgroundWorker();
+            this.picLoading = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             this.SuspendLayout();
             // 
             // bwSites
@@ -94,7 +96,7 @@
             this.txtUsername.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(280, 35);
-            this.txtUsername.TabIndex = 52;
+            this.txtUsername.TabIndex = 0;
             // 
             // txtPassword
             // 
@@ -103,7 +105,7 @@
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '●';
             this.txtPassword.Size = new System.Drawing.Size(280, 35);
-            this.txtPassword.TabIndex = 55;
+            this.txtPassword.TabIndex = 1;
             // 
             // btnLogin
             // 
@@ -111,7 +113,7 @@
             this.btnLogin.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(327, 40);
-            this.btnLogin.TabIndex = 56;
+            this.btnLogin.TabIndex = 4;
             this.btnLogin.Text = "Login";
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
@@ -121,7 +123,7 @@
             this.lblDomain.AutoSize = true;
             this.lblDomain.BackColor = System.Drawing.Color.White;
             this.lblDomain.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDomain.Location = new System.Drawing.Point(188, 381);
+            this.lblDomain.Location = new System.Drawing.Point(192, 384);
             this.lblDomain.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDomain.Name = "lblDomain";
             this.lblDomain.Size = new System.Drawing.Size(96, 29);
@@ -138,7 +140,7 @@
             this.cboDomain.Name = "cboDomain";
             this.cboDomain.Size = new System.Drawing.Size(280, 37);
             this.cboDomain.Sorted = true;
-            this.cboDomain.TabIndex = 58;
+            this.cboDomain.TabIndex = 2;
             this.cboDomain.SelectedIndexChanged += new System.EventHandler(this.cboDomain_SelectedIndexChanged);
             // 
             // label1
@@ -146,7 +148,7 @@
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.White;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(208, 480);
+            this.label1.Location = new System.Drawing.Point(216, 480);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(55, 29);
@@ -161,7 +163,7 @@
             this.cboSite.Name = "cboSite";
             this.cboSite.Size = new System.Drawing.Size(280, 37);
             this.cboSite.Sorted = true;
-            this.cboSite.TabIndex = 60;
+            this.cboSite.TabIndex = 3;
             // 
             // bwLogin
             // 
@@ -170,11 +172,24 @@
             this.bwLogin.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwLogin_DoWork);
             this.bwLogin.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwLogin_RunWorkerCompleted);
             // 
+            // picLoading
+            // 
+            this.picLoading.BackColor = System.Drawing.Color.Transparent;
+            this.picLoading.Image = ((System.Drawing.Image)(resources.GetObject("picLoading.Image")));
+            this.picLoading.Location = new System.Drawing.Point(56, 512);
+            this.picLoading.Name = "picLoading";
+            this.picLoading.Size = new System.Drawing.Size(40, 40);
+            this.picLoading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picLoading.TabIndex = 60;
+            this.picLoading.TabStop = false;
+            this.picLoading.Visible = false;
+            // 
             // FrmLogin
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(463, 685);
+            this.Controls.Add(this.picLoading);
             this.Controls.Add(this.cboSite);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cboDomain);
@@ -197,6 +212,7 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmLogin_FormClosing);
             this.Load += new System.EventHandler(this.FrmLogin_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -215,5 +231,6 @@
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.ComboBox cboSite;
         private System.ComponentModel.BackgroundWorker bwLogin;
+        public System.Windows.Forms.PictureBox picLoading;
     }
 }

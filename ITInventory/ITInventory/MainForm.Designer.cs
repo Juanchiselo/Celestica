@@ -38,15 +38,21 @@
             this.mnuCheckAssetTag = new System.Windows.Forms.MenuItem();
             this.mnuSearch = new System.Windows.Forms.MenuItem();
             this.mnuDatabase = new System.Windows.Forms.MenuItem();
+            this.mnuDatabaseSetUp = new System.Windows.Forms.MenuItem();
             this.menuItem11 = new System.Windows.Forms.MenuItem();
             this.mnuCreateUser = new System.Windows.Forms.MenuItem();
             this.mnuEditUser = new System.Windows.Forms.MenuItem();
             this.mnuParameters = new System.Windows.Forms.MenuItem();
             this.mnuAddParameter = new System.Windows.Forms.MenuItem();
             this.mnuEditParameter = new System.Windows.Forms.MenuItem();
-            this.mnuDatabaseSetUp = new System.Windows.Forms.MenuItem();
+            this.mnuPreventiveMaintenance = new System.Windows.Forms.MenuItem();
+            this.bwBrand = new System.ComponentModel.BackgroundWorker();
+            this.bwModel = new System.ComponentModel.BackgroundWorker();
+            this.bwAdd = new System.ComponentModel.BackgroundWorker();
             this.tabMenus = new ITInventory.TablessControl();
             this.tabAdd = new System.Windows.Forms.TabPage();
+            this.picLoadingModel = new System.Windows.Forms.PictureBox();
+            this.picLoadingBrand = new System.Windows.Forms.PictureBox();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnAutoCollect = new System.Windows.Forms.Button();
             this.btnComment = new System.Windows.Forms.Button();
@@ -76,18 +82,19 @@
             this.lblPCID = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabPreventiveMaintenance = new System.Windows.Forms.TabPage();
+            this.tablessControl1 = new ITInventory.TablessControl();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.checkedListBox2 = new System.Windows.Forms.CheckedListBox();
+            this.cboPCID = new System.Windows.Forms.ComboBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
             this.comboBox9 = new System.Windows.Forms.ComboBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.checkedListBox2 = new System.Windows.Forms.CheckedListBox();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.comboBox8 = new System.Windows.Forms.ComboBox();
+            this.cboLocationPM = new System.Windows.Forms.ComboBox();
             this.button3 = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
@@ -95,15 +102,21 @@
             this.lblUsernameGoal = new System.Windows.Forms.Label();
             this.tabMenus.SuspendLayout();
             this.tabAdd.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picLoadingModel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picLoadingBrand)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPreventiveMaintenance.SuspendLayout();
+            this.tablessControl1.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // mnuMain
             // 
             this.mnuMain.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.mnuInventory,
-            this.mnuDatabase});
+            this.mnuDatabase,
+            this.mnuPreventiveMaintenance});
             // 
             // mnuInventory
             // 
@@ -161,6 +174,12 @@
             this.mnuDatabase.Text = "Database";
             this.mnuDatabase.Visible = false;
             // 
+            // mnuDatabaseSetUp
+            // 
+            this.mnuDatabaseSetUp.Index = 0;
+            this.mnuDatabaseSetUp.Text = "Set Up";
+            this.mnuDatabaseSetUp.Click += new System.EventHandler(this.mnuDatabaseSetUp_Click);
+            // 
             // menuItem11
             // 
             this.menuItem11.Index = 1;
@@ -203,11 +222,31 @@
             this.mnuEditParameter.Visible = false;
             this.mnuEditParameter.Click += new System.EventHandler(this.mnuRemoveParameter_Click);
             // 
-            // mnuDatabaseSetUp
+            // mnuPreventiveMaintenance
             // 
-            this.mnuDatabaseSetUp.Index = 0;
-            this.mnuDatabaseSetUp.Text = "Set Up";
-            this.mnuDatabaseSetUp.Click += new System.EventHandler(this.mnuDatabaseSetUp_Click);
+            this.mnuPreventiveMaintenance.Index = 2;
+            this.mnuPreventiveMaintenance.Text = "Preventive Maintenance";
+            this.mnuPreventiveMaintenance.Click += new System.EventHandler(this.mnuPreventiveMaintenance_Click);
+            // 
+            // bwBrand
+            // 
+            this.bwBrand.WorkerReportsProgress = true;
+            this.bwBrand.WorkerSupportsCancellation = true;
+            this.bwBrand.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwBrand_DoWork);
+            this.bwBrand.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwBrand_RunWorkerCompleted);
+            // 
+            // bwModel
+            // 
+            this.bwModel.WorkerReportsProgress = true;
+            this.bwModel.WorkerSupportsCancellation = true;
+            this.bwModel.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwModel_DoWork);
+            this.bwModel.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwModel_RunWorkerCompleted);
+            // 
+            // bwAdd
+            // 
+            this.bwAdd.WorkerReportsProgress = true;
+            this.bwAdd.WorkerSupportsCancellation = true;
+            this.bwAdd.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwAdd_DoWork);
             // 
             // tabMenus
             // 
@@ -223,6 +262,8 @@
             // 
             // tabAdd
             // 
+            this.tabAdd.Controls.Add(this.picLoadingModel);
+            this.tabAdd.Controls.Add(this.picLoadingBrand);
             this.tabAdd.Controls.Add(this.btnUpdate);
             this.tabAdd.Controls.Add(this.btnAutoCollect);
             this.tabAdd.Controls.Add(this.btnComment);
@@ -258,6 +299,30 @@
             this.tabAdd.TabIndex = 0;
             this.tabAdd.Text = "Add";
             this.tabAdd.UseVisualStyleBackColor = true;
+            // 
+            // picLoadingModel
+            // 
+            this.picLoadingModel.BackColor = System.Drawing.Color.Transparent;
+            this.picLoadingModel.Image = ((System.Drawing.Image)(resources.GetObject("picLoadingModel.Image")));
+            this.picLoadingModel.Location = new System.Drawing.Point(168, 240);
+            this.picLoadingModel.Name = "picLoadingModel";
+            this.picLoadingModel.Size = new System.Drawing.Size(40, 40);
+            this.picLoadingModel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picLoadingModel.TabIndex = 89;
+            this.picLoadingModel.TabStop = false;
+            this.picLoadingModel.Visible = false;
+            // 
+            // picLoadingBrand
+            // 
+            this.picLoadingBrand.BackColor = System.Drawing.Color.Transparent;
+            this.picLoadingBrand.Image = ((System.Drawing.Image)(resources.GetObject("picLoadingBrand.Image")));
+            this.picLoadingBrand.Location = new System.Drawing.Point(168, 192);
+            this.picLoadingBrand.Name = "picLoadingBrand";
+            this.picLoadingBrand.Size = new System.Drawing.Size(40, 40);
+            this.picLoadingBrand.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picLoadingBrand.TabIndex = 88;
+            this.picLoadingBrand.TabStop = false;
+            this.picLoadingBrand.Visible = false;
             // 
             // btnUpdate
             // 
@@ -554,29 +619,108 @@
             // 
             // tabPreventiveMaintenance
             // 
+            this.tabPreventiveMaintenance.Controls.Add(this.tablessControl1);
+            this.tabPreventiveMaintenance.Controls.Add(this.cboPCID);
             this.tabPreventiveMaintenance.Controls.Add(this.textBox4);
             this.tabPreventiveMaintenance.Controls.Add(this.textBox3);
-            this.tabPreventiveMaintenance.Controls.Add(this.textBox2);
             this.tabPreventiveMaintenance.Controls.Add(this.label17);
             this.tabPreventiveMaintenance.Controls.Add(this.button4);
             this.tabPreventiveMaintenance.Controls.Add(this.comboBox9);
             this.tabPreventiveMaintenance.Controls.Add(this.label16);
-            this.tabPreventiveMaintenance.Controls.Add(this.label10);
-            this.tabPreventiveMaintenance.Controls.Add(this.checkedListBox2);
-            this.tabPreventiveMaintenance.Controls.Add(this.checkedListBox1);
-            this.tabPreventiveMaintenance.Controls.Add(this.label15);
-            this.tabPreventiveMaintenance.Controls.Add(this.comboBox8);
+            this.tabPreventiveMaintenance.Controls.Add(this.cboLocationPM);
             this.tabPreventiveMaintenance.Controls.Add(this.button3);
             this.tabPreventiveMaintenance.Controls.Add(this.label11);
             this.tabPreventiveMaintenance.Controls.Add(this.label13);
             this.tabPreventiveMaintenance.Controls.Add(this.label14);
             this.tabPreventiveMaintenance.Controls.Add(this.lblUsernameGoal);
-            this.tabPreventiveMaintenance.Location = new System.Drawing.Point(4, 29);
+            this.tabPreventiveMaintenance.Location = new System.Drawing.Point(4, 38);
             this.tabPreventiveMaintenance.Name = "tabPreventiveMaintenance";
-            this.tabPreventiveMaintenance.Size = new System.Drawing.Size(958, 667);
+            this.tabPreventiveMaintenance.Size = new System.Drawing.Size(958, 658);
             this.tabPreventiveMaintenance.TabIndex = 2;
             this.tabPreventiveMaintenance.Text = "Preventive Maintenance";
             this.tabPreventiveMaintenance.UseVisualStyleBackColor = true;
+            // 
+            // tablessControl1
+            // 
+            this.tablessControl1.Controls.Add(this.tabPage3);
+            this.tablessControl1.Controls.Add(this.tabPage4);
+            this.tablessControl1.Location = new System.Drawing.Point(544, 72);
+            this.tablessControl1.Name = "tablessControl1";
+            this.tablessControl1.SelectedIndex = 0;
+            this.tablessControl1.Size = new System.Drawing.Size(376, 536);
+            this.tablessControl1.TabIndex = 84;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.checkedListBox1);
+            this.tabPage3.Location = new System.Drawing.Point(4, 38);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(368, 494);
+            this.tabPage3.TabIndex = 0;
+            this.tabPage3.Text = "tabPage3";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // checkedListBox1
+            // 
+            this.checkedListBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.checkedListBox1.CheckOnClick = true;
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.Items.AddRange(new object[] {
+            "Validated Computer Name",
+            "Connected to Celestica Network",
+            "McAfee Installed and Updated",
+            "Viper Link",
+            "Chrome Installed",
+            "Working Mouse",
+            "Working Keyboard",
+            "Working Scanner",
+            "Newpass#01 Sticker",
+            "PCID Sticker",
+            "Cleaned Inside Workstation",
+            "Cable Management"});
+            this.checkedListBox1.Location = new System.Drawing.Point(0, 8);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.Size = new System.Drawing.Size(384, 600);
+            this.checkedListBox1.TabIndex = 73;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.checkedListBox2);
+            this.tabPage4.Location = new System.Drawing.Point(4, 29);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(368, 503);
+            this.tabPage4.TabIndex = 1;
+            this.tabPage4.Text = "tabPage4";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // checkedListBox2
+            // 
+            this.checkedListBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.checkedListBox2.CheckOnClick = true;
+            this.checkedListBox2.FormattingEnabled = true;
+            this.checkedListBox2.Items.AddRange(new object[] {
+            "Cleaned Printhead",
+            "Cleaned Inside of Printer",
+            "Printing Quality Validated",
+            "Printer Updated on Worksheet",
+            "No Printer"});
+            this.checkedListBox2.Location = new System.Drawing.Point(0, 8);
+            this.checkedListBox2.Name = "checkedListBox2";
+            this.checkedListBox2.Size = new System.Drawing.Size(384, 540);
+            this.checkedListBox2.TabIndex = 74;
+            // 
+            // cboPCID
+            // 
+            this.cboPCID.BackColor = System.Drawing.Color.White;
+            this.cboPCID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboPCID.FormattingEnabled = true;
+            this.cboPCID.Location = new System.Drawing.Point(192, 144);
+            this.cboPCID.Name = "cboPCID";
+            this.cboPCID.Size = new System.Drawing.Size(211, 37);
+            this.cboPCID.Sorted = true;
+            this.cboPCID.TabIndex = 82;
             // 
             // textBox4
             // 
@@ -593,13 +737,6 @@
             this.textBox3.Size = new System.Drawing.Size(384, 150);
             this.textBox3.TabIndex = 76;
             // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(200, 106);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(211, 35);
-            this.textBox2.TabIndex = 53;
-            // 
             // label17
             // 
             this.label17.AutoSize = true;
@@ -612,7 +749,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(567, 549);
+            this.button4.Location = new System.Drawing.Point(584, 608);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(245, 32);
             this.button4.TabIndex = 79;
@@ -644,85 +781,21 @@
             this.label16.TabIndex = 77;
             this.label16.Text = "Category:";
             // 
-            // label10
+            // cboLocationPM
             // 
-            this.label10.AutoSize = true;
-            this.label10.BackColor = System.Drawing.Color.White;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(620, 337);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(126, 29);
-            this.label10.TabIndex = 75;
-            this.label10.Text = "Printer PM";
-            // 
-            // checkedListBox2
-            // 
-            this.checkedListBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.checkedListBox2.CheckOnClick = true;
-            this.checkedListBox2.FormattingEnabled = true;
-            this.checkedListBox2.Items.AddRange(new object[] {
-            "Cleaned Printhead",
-            "Cleaned Inside of Printer",
-            "Printing Quality Validated",
-            "Printer Updated on Worksheet",
-            "No Printer"});
-            this.checkedListBox2.Location = new System.Drawing.Point(538, 383);
-            this.checkedListBox2.Name = "checkedListBox2";
-            this.checkedListBox2.Size = new System.Drawing.Size(287, 150);
-            this.checkedListBox2.TabIndex = 74;
-            // 
-            // checkedListBox1
-            // 
-            this.checkedListBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.checkedListBox1.CheckOnClick = true;
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Items.AddRange(new object[] {
-            "Validated Computer Name",
-            "Connected to Celestica Network",
-            "McAfee Installed and Updated",
-            "Viper Link",
-            "Chrome Installed",
-            "Working Mouse",
-            "Working Keyboard",
-            "Working Scanner",
-            "Newpass#01 Sticker",
-            "PCID Sticker",
-            "Cleaned Inside Workstation",
-            "Cable Management"});
-            this.checkedListBox1.Location = new System.Drawing.Point(538, 80);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(287, 240);
-            this.checkedListBox1.TabIndex = 73;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.BackColor = System.Drawing.Color.White;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(620, 28);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(107, 29);
-            this.label15.TabIndex = 68;
-            this.label15.Text = "Activities";
-            // 
-            // comboBox8
-            // 
-            this.comboBox8.BackColor = System.Drawing.Color.White;
-            this.comboBox8.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox8.FormattingEnabled = true;
-            this.comboBox8.Items.AddRange(new object[] {
-            "PSU",
-            "PCN",
-            "Repair",
-            "Packout"});
-            this.comboBox8.Location = new System.Drawing.Point(200, 145);
-            this.comboBox8.Name = "comboBox8";
-            this.comboBox8.Size = new System.Drawing.Size(211, 37);
-            this.comboBox8.TabIndex = 64;
+            this.cboLocationPM.BackColor = System.Drawing.Color.White;
+            this.cboLocationPM.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboLocationPM.FormattingEnabled = true;
+            this.cboLocationPM.Location = new System.Drawing.Point(192, 96);
+            this.cboLocationPM.Name = "cboLocationPM";
+            this.cboLocationPM.Size = new System.Drawing.Size(211, 37);
+            this.cboLocationPM.Sorted = true;
+            this.cboLocationPM.TabIndex = 64;
+            this.cboLocationPM.SelectedIndexChanged += new System.EventHandler(this.cboLocationPM_SelectedIndexChanged);
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(135, 549);
+            this.button3.Location = new System.Drawing.Point(96, 592);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(245, 32);
             this.button3.TabIndex = 62;
@@ -743,7 +816,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.BackColor = System.Drawing.Color.White;
-            this.label13.Location = new System.Drawing.Point(23, 148);
+            this.label13.Location = new System.Drawing.Point(24, 104);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(104, 29);
             this.label13.TabIndex = 54;
@@ -753,7 +826,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.BackColor = System.Drawing.Color.White;
-            this.label14.Location = new System.Drawing.Point(28, 106);
+            this.label14.Location = new System.Drawing.Point(32, 144);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(69, 29);
             this.label14.TabIndex = 52;
@@ -773,7 +846,7 @@
             // MainForm
             // 
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(928, 706);
+            this.ClientSize = new System.Drawing.Size(928, 709);
             this.Controls.Add(this.tabMenus);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -785,9 +858,14 @@
             this.tabMenus.ResumeLayout(false);
             this.tabAdd.ResumeLayout(false);
             this.tabAdd.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picLoadingModel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picLoadingBrand)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabPreventiveMaintenance.ResumeLayout(false);
             this.tabPreventiveMaintenance.PerformLayout();
+            this.tablessControl1.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -797,16 +875,13 @@
         private System.Windows.Forms.TabPage tabPreventiveMaintenance;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.ComboBox comboBox9;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.CheckedListBox checkedListBox2;
         private System.Windows.Forms.CheckedListBox checkedListBox1;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.ComboBox comboBox8;
+        private System.Windows.Forms.ComboBox cboLocationPM;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label13;
@@ -856,6 +931,16 @@
         public System.Windows.Forms.MenuItem mnuInventory;
         public System.Windows.Forms.MenuItem mnuDatabase;
         private System.Windows.Forms.MenuItem mnuDatabaseSetUp;
+        public System.Windows.Forms.MenuItem mnuPreventiveMaintenance;
+        private System.ComponentModel.BackgroundWorker bwBrand;
+        private System.ComponentModel.BackgroundWorker bwModel;
+        private System.ComponentModel.BackgroundWorker bwAdd;
+        public System.Windows.Forms.PictureBox picLoadingModel;
+        public System.Windows.Forms.PictureBox picLoadingBrand;
+        private System.Windows.Forms.ComboBox cboPCID;
+        private TablessControl tablessControl1;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tabPage4;
     }
 }
 

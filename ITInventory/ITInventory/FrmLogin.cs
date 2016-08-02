@@ -11,10 +11,9 @@ namespace ITInventory
 {
     public partial class FrmLogin : Form
     {
-        MD5 md5 = MD5.Create();
         User user;
-        string localUsername = "administrator";
-        string localPassword = "##2fun4cls";
+        string localUsername = System.Configuration.ConfigurationManager.AppSettings["localUsername"];
+        string localPassword = System.Configuration.ConfigurationManager.AppSettings["localPassword"];
         List<string> sites;
         string domain = "";
         DataTable dataTable = null;
@@ -28,8 +27,7 @@ namespace ITInventory
         {
             sites = ActiveDirectory.ListOU(domain);            
         }
-
-
+        
         // Executes when the login button is clicked.
         // It connects to the database and checks if the user exists.
         private void btnLogin_Click(object sender, EventArgs e)
@@ -56,16 +54,35 @@ namespace ITInventory
 
         private void bwSites_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            cboSite.Items.Clear();
+
+            // Adds the sites found in the selected domain to
+            // the Site combobox.
             for (int i = 0; i < sites.Count; i++)
                 cboSite.Items.Add(sites[i]);
+
+            cboSite.Enabled = true;
+            picLoading.Visible = false;
         }
 
         private void FrmLogin_Load(object sender, EventArgs e)
         {
-            
-            cboDomain.SelectedIndex = 0;
-            domain = cboDomain.Text;
-            bwSites.RunWorkerAsync();
+            cboSite.Enabled = false;
+            cboSite.Items.Add("Loading...");
+            cboSite.SelectedIndex = 0;
+            picLoading.Visible = true;
+
+            if(DBConnection.Instance.DoesDatabaseExist())
+            {
+                cboDomain.SelectedIndex = 0;
+                domain = cboDomain.Text;
+                bwSites.RunWorkerAsync();
+            }
+            else
+            {
+                MessageBox.Show("The database does not exist.\n"
+                    + "Please log in with the local user.");
+            }
         }
 
         private void FrmLogin_FormClosing(object sender, FormClosingEventArgs e)
@@ -81,10 +98,8 @@ namespace ITInventory
 
         private void bwLogin_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            //ActiveDirectory.Instance.GetUserInformation(txtUsername.Text, cboDomain.Text, cboSite.Text);
-
             if (ActiveDirectory.Instance.Authenticate(txtUsername.Text, txtPassword.Text, cboDomain.Text)
-               || dataTable.Rows.Count != 0
+               && dataTable.Rows.Count != 0
                || (txtUsername.Text.Equals(localUsername)
                && (txtPassword.Text.Equals(localPassword))))
             {
@@ -98,10 +113,9 @@ namespace ITInventory
                         (int)data["userID"]);
                 }
                 else
-                {
                     user = new User(txtUsername.Text, localUsername, "Celestica", true, 0);
-                }
 
+                // Instantiates the main form.
                 MainForm frmAdd = new MainForm();
                 frmAdd.user = user;
                 frmAdd.lblUsername.Text = user.FirstName + " " + user.LastName;
@@ -109,7 +123,7 @@ namespace ITInventory
                 if (user.IsAdmin)
                 {
                     frmAdd.mnuDatabase.Visible = true;
-                    //frmAdd.mnuPreventiveMaintenance.Visible = false;
+                    frmAdd.mnuPreventiveMaintenance.Visible = true;
                 }
 
                 this.Hide();

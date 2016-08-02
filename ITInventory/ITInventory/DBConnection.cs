@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System;
 using System.Data;
+using System.Configuration;
 
 public sealed class DBConnection
 {
@@ -22,18 +23,15 @@ public sealed class DBConnection
 
 
     private MySqlConnection connection;
-    private string server;
-    private string database;
-    private string uid;
-    private string password;
+    private string server = System.Configuration.ConfigurationManager.AppSettings["server"];
+    private string database = System.Configuration.ConfigurationManager.AppSettings["database"];
+    private string uid = System.Configuration.ConfigurationManager.AppSettings["uid"];
+    private string password = System.Configuration.ConfigurationManager.AppSettings["password"];
 
-    private void Initialize()
+    public void Initialize()
     {
-        server = "ONTDTVFV";
-        database = "ont_inventory";
-        uid = "inventory";
-        password = "viper123";
         string connectionString;
+
         connectionString = "SERVER=" + server + ";DATABASE=" + database
             + ";UID=" + uid + ";PASSWORD=" + password + ";";
         connection = new MySqlConnection(connectionString);
@@ -43,8 +41,13 @@ public sealed class DBConnection
     {
         try
         {
-            connection.Open();
-            return true;
+            if (DoesDatabaseExist())
+            {
+                connection.Open();
+                return true;
+            }
+            else
+                return false;
         }
         catch(MySqlException exception)
         {
@@ -241,6 +244,141 @@ public sealed class DBConnection
 
     public bool DoesDatabaseExist()
     {
-        return OpenConnection();
+        if (server.Equals("")
+            && database.Equals("")
+            && uid.Equals("")
+            && password.Equals(""))
+            return false;
+        else
+            return true;
+    }
+
+    public bool CreateDatabase(string server, string database,
+        string uid, string password)
+    {
+        string connectionString = "Data source=" + server
+            + ";UserId=" + uid + ";Password=" + password + ";";
+
+        connection = new MySqlConnection(connectionString);
+
+        MySqlCommand command = new MySqlCommand();
+
+        try
+        {
+            command.Connection = connection;
+            command.Connection.Open();
+            Console.WriteLine("Connection opened.");
+        }
+        catch(NullReferenceException exception)
+        {
+            Console.WriteLine("ERROR: {0}", exception.ToString());
+        }
+
+        string query = "CREATE DATABASE IF NOT EXISTS "
+                    + database + ";";
+
+        command.CommandText = query;
+
+        Console.WriteLine(query);
+
+        try
+        {
+            command.ExecuteNonQuery();
+            Console.WriteLine("Database created.");
+
+            command.CommandText = "USE " + database + ";";
+            command.ExecuteNonQuery();
+
+            command.CommandText = "CREATE TABLE IF NOT EXISTS tblUser "
+                + "(userID INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+                + "username VARCHAR(50) NOT NULL UNIQUE, "
+                + "firstName VARCHAR(50) NOT NULL, "
+                + "lastName VARCHAR(50) NOT NULL, "
+                + "isAdmin TINYINT(1) NOT NULL);";
+            command.ExecuteNonQuery();
+            
+            command.CommandText = "CREATE TABLE IF NOT EXISTS tblType "
+                + "(typeID INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+                + "type VARCHAR(50) NOT NULL UNIQUE);";
+            command.ExecuteNonQuery();
+
+            command.CommandText = "CREATE TABLE IF NOT EXISTS tblBrand "
+                + "(brandID INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+                + "brand VARCHAR(50) NOT NULL, "
+                + "typeID INT(11));";
+            command.ExecuteNonQuery();
+            
+            command.CommandText = "CREATE TABLE IF NOT EXISTS tblModel "
+                + "(modelID INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+                + "model VARCHAR(50) NOT NULL, "
+                + "brandID INT(11) NOT NULL);";
+            command.ExecuteNonQuery();
+            
+            command.CommandText = "CREATE TABLE IF NOT EXISTS tblOS "
+                + "(osID INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+                + "os VARCHAR(50) NOT NULL UNIQUE);";
+            command.ExecuteNonQuery();
+
+            command.CommandText = "CREATE TABLE IF NOT EXISTS tblLocation "
+                + "(locationID INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+                + "location VARCHAR(50) NOT NULL UNIQUE);";
+            command.ExecuteNonQuery();
+
+            command.CommandText = "CREATE TABLE IF NOT EXISTS tblInventory "
+                + "(inventoryID INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+                + "assetTag VARCHAR(50) NOT NULL UNIQUE, "
+                + "serial VARCHAR(50) NOT NULL, "
+                + "typeID INT(11) NOT NULL, "
+                + "brandID INT(11) NOT NULL, "
+                + "modelID INT(11) NOT NULL, "
+                + "locationID INT(11) NOT NULL, "
+                + "osID INT(11) NOT NULL, "
+                + "pcID VARCHAR(50) NOT NULL, "
+                + "belongsTo VARCHAR(50) NOT NULL, "
+                + "editedBy INT(11) NOT NULL, "
+                + "comment TEXT, "
+                + "hasMouse TINYINT(1), "
+                + "hasKeyboard TINYINT(1), "
+                + "hasScanner TINYINT(1), "
+                + "hasCamera TINYINT(1), "
+                + "hasPSU TINYINT(1), "
+                + "hasDockingStation TINYINT(1));";
+            command.ExecuteNonQuery();
+        }
+        catch (MySqlException exception)
+        {
+            Console.WriteLine("ERROR: {0}", exception.ToString());
+            return false;
+        }
+        finally
+        {
+            command.Connection.Close();
+            Console.WriteLine("Connection closed.");
+        }
+        return true;
+    }
+
+    public string Server
+    {
+        get { return server; }
+        set { server = value; }
+    }
+
+    public string Database
+    {
+        get { return database; }
+        set { database = value; }
+    }
+
+    public string UID
+    {
+        get { return uid; }
+        set { uid = value; }
+    }
+
+    public string Password
+    {
+        get { return password; }
+        set { password = value; }
     }
 }

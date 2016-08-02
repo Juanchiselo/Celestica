@@ -23,8 +23,10 @@ namespace ITInventory
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
+            //ActiveDirectory.Instance.GetUserInformation(txtUsername.Text, cboDomain.Text, cboSite.Text);
 
-            if(txtFirstName.Text != "" && txtLastName.Text != ""
+
+            if (txtFirstName.Text != "" && txtLastName.Text != ""
                 && txtPassword.Text !="" && txtUsername.Text != "")
             {
                 string query = "INSERT INTO tbluser (username, password, "

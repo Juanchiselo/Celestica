@@ -16,5 +16,26 @@ namespace ITInventory
         {
             InitializeComponent();
         }
+
+        private void btnCreate_Click(object sender, EventArgs e)
+        {
+            bwCreateDatabase.RunWorkerAsync();
+        }
+
+        private void bwCreateDatabase_DoWork(object sender, DoWorkEventArgs e)
+        {
+            DBConnection.Instance.CreateDatabase(txtServerName.Text,
+                txtDatabaseName.Text, txtUID.Text, txtPassword.Text);           
+        }
+
+        private void bwCreateDatabase_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            MessageBox.Show(e.ProgressPercentage.ToString() + "% Completed.");
+        }
+
+        private void bwCreateDatabase_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            MessageBox.Show("Database created sucessfully!");
+        }
     }
 }

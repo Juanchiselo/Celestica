@@ -19,6 +19,8 @@ namespace ITInventory
         public Item item = null;
         private static Item inventoryItem = null;
         private bool bulkAdd = false;
+        private string brand = "";
+        private string type = "";
 
         FrmParameters frmParameters = new FrmParameters();
 
@@ -39,6 +41,17 @@ namespace ITInventory
         private void mnuPreventiveMaintenance_Click(object sender, EventArgs e)
         {
             lblUsernameGoal.Text = lblUsername.Text + ", you need 3 more done for today.";
+            query = "SELECT location FROM tbllocation";
+
+            dataTable = DBConnection.Instance.Select(query);
+
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+                cboLocationPM.Items.Add(dataTable.Rows[i].Field<string>(0));
+
+            
+
+
+
             tabMenus.SelectedTab = tabPreventiveMaintenance;
         }
 
@@ -90,6 +103,7 @@ namespace ITInventory
             btnClear.Visible = true;
             bulkAdd = false;
             btnClear.PerformClick();
+            tabMenus.SelectedTab = tabAdd;
         }
 
         private void mnuAddParameter_Click(object sender, EventArgs e)
@@ -215,18 +229,19 @@ namespace ITInventory
             if (autoFilling)
                 return;
 
-            if(!cboType.Text.Equals(""))
-            {
-                query = "SELECT typeID FROM tbltype WHERE type='" + cboType.Text + "'";
-                int typeID = DBConnection.Instance.Select(query).Rows[0].Field<Int32>(0);
+            type = cboType.Text;
+            cboBrand.Enabled = false;
+            cboBrand.Items.Add("Loading...");
+            //cboBrand.SelectedIndex = 0;
+            picLoadingBrand.Visible = true;
+
+            if (!cboType.Text.Equals(""))
+                bwBrand.RunWorkerAsync();
 
 
-                query = "SELECT brand FROM tblbrand WHERE typeID='" + typeID + "'";
-                dataTable = DBConnection.Instance.Select(query);
-
-                for (int i = 0; i < dataTable.Rows.Count; i++)
-                    cboBrand.Items.Add(dataTable.Rows[i].Field<string>(0));
-            }
+            cboBrand.Enabled = true;
+            picLoadingBrand.Visible = false;
+            cboModel.Items.Clear();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -358,6 +373,8 @@ namespace ITInventory
             txtPCID.Text = "";
             txtSerial.Text = "";
             txtBelongsTo.Text = "";
+            picLoadingBrand.Visible = false;
+            picLoadingModel.Visible = false;
 
             foreach (int i in lstPeripherals.CheckedIndices)
                 lstPeripherals.SetItemCheckState(i, CheckState.Unchecked);
@@ -366,22 +383,22 @@ namespace ITInventory
         private void cboBrand_SelectedIndexChanged(object sender, EventArgs e)
         {
             cboModel.Items.Clear();
+            cboModel.Enabled = false;
+            cboModel.Items.Add("Loading...");
+            //cboModel.SelectedIndex = 0;
+            picLoadingModel.Visible = true;
+
 
             if (autoFilling)
                 return;
 
-            if (!cboBrand.Text.Equals(""))
-            {
-                query = "SELECT brandID FROM tblbrand WHERE brand='" + cboBrand.Text + "'";
-                int brandID = DBConnection.Instance.Select(query).Rows[0].Field<Int32>(0);
+            brand = cboBrand.Text;
 
+            if (!cboBrand.Text.Equals("Loading..."))
+                bwModel.RunWorkerAsync();
 
-                query = "SELECT model FROM tblmodel WHERE brandID='" + brandID + "'";
-                dataTable = DBConnection.Instance.Select(query);
-
-                for (int i = 0; i < dataTable.Rows.Count; i++)
-                    cboModel.Items.Add(dataTable.Rows[i].Field<string>(0));
-            }
+            cboModel.Enabled = true;
+            picLoadingModel.Visible = false;
         }
 
         private void mnuView_Click(object sender, EventArgs e)
@@ -514,12 +531,64 @@ namespace ITInventory
         {
             bulkAdd = true;
             lblTitle.Text = "Bulk Add";
+            tabMenus.SelectedTab = tabAdd;
         }
 
         private void mnuDatabaseSetUp_Click(object sender, EventArgs e)
         {
             FrmDatabaseSetUp frmDatabaseSetUp = new FrmDatabaseSetUp();
             frmDatabaseSetUp.ShowDialog();
+        }
+
+        private void bwBrand_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            query = "SELECT brand FROM tblbrand WHERE typeID = "
+                + "(SELECT typeID FROM tbltype WHERE type='"+ type + "');";
+            dataTable = DBConnection.Instance.Select(query);
+        }
+        
+        private void bwBrand_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            cboBrand.Items.Clear();
+
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+                cboBrand.Items.Add(dataTable.Rows[i].Field<string>(0));
+        }
+
+        private void bwModel_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            query = "SELECT model FROM tblmodel WHERE brandID = "
+                + "(SELECT brandID FROM tblbrand WHERE brand='" + brand + "' "
+                + "AND typeId=(SELECT typeID FROM tbltype WHERE type='" + type + "'));";
+            dataTable = DBConnection.Instance.Select(query);
+        }
+
+        private void bwAdd_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+
+        }
+
+        private void bwModel_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            cboModel.Items.Clear();
+
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+                cboModel.Items.Add(dataTable.Rows[i].Field<string>(0));
+        }
+
+        private void cboLocationPM_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            query = "SELECT pcid FROM tblInventory WHERE locationID = "
+                + "(SELECT locationID FROM tblLocation WHERE location='"
+                + cboLocationPM.Text + "');";
+
+            dataTable = DBConnection.Instance.Select(query);
+
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+            {
+                if(!dataTable.Rows[i].Field<string>(0).Equals(""))
+                    cboPCID.Items.Add(dataTable.Rows[i].Field<string>(0));
+            }
         }
     }
 

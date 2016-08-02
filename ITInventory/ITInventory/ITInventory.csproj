@@ -58,6 +58,7 @@
       <HintPath>..\..\..\..\..\Downloads\mysql-connector-net-6.9.8-noinstall\v4.5\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.DirectoryServices.AccountManagement" />
@@ -198,6 +199,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CLS Fireball Logo.ico" />
+    <Content Include="CLS-Fireball-Logo.gif" />
     <Content Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
