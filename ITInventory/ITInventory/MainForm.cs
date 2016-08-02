@@ -37,7 +37,9 @@ namespace ITInventory
             PopulateOptions();
             
         }
-        
+
+        #region Menus
+
         private void mnuPreventiveMaintenance_Click(object sender, EventArgs e)
         {
             lblUsernameGoal.Text = lblUsername.Text + ", you need 3 more done for today.";
@@ -47,29 +49,17 @@ namespace ITInventory
 
             for (int i = 0; i < dataTable.Rows.Count; i++)
                 cboLocationPM.Items.Add(dataTable.Rows[i].Field<string>(0));
-
             
-
-
-
             tabMenus.SelectedTab = tabPreventiveMaintenance;
         }
 
-        private void mnuRemoveStation_Click(object sender, EventArgs e)
+        private void mnuSetAssetTagBIOS_Click(object sender, EventArgs e)
         {
-            Console.Write("Remove station clicked");
-
-            FrmParameters frmRemoveStation = new FrmParameters();
-            frmRemoveStation.ShowDialog();
+            FrmSetAssetTag frmSetAssetTag = new FrmSetAssetTag();
+            frmSetAssetTag.ShowDialog();
         }
 
         
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            frmCommentHistory frmComment = new frmCommentHistory();
-            frmComment.ShowDialog();
-        }
 
         private void mnuCreateUser_Click(object sender, EventArgs e)
         {
@@ -137,6 +127,14 @@ namespace ITInventory
             }
             
             frmParameters.ShowDialog();
+        }
+
+        #endregion
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            frmCommentHistory frmComment = new frmCommentHistory();
+            frmComment.ShowDialog();
         }
 
         public static void RefreshForm()
@@ -590,6 +588,8 @@ namespace ITInventory
                     cboPCID.Items.Add(dataTable.Rows[i].Field<string>(0));
             }
         }
+        
+        
     }
 
     public class TablessControl : TabControl

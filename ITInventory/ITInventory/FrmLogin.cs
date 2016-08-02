@@ -14,20 +14,15 @@ namespace ITInventory
         User user;
         string localUsername = System.Configuration.ConfigurationManager.AppSettings["localUsername"];
         string localPassword = System.Configuration.ConfigurationManager.AppSettings["localPassword"];
-        List<string> sites;
-        string domain = "";
+        List<string> sites = new List<string>();
+        string selectedDomain = "";
         DataTable dataTable = null;
 
         public FrmLogin()
         {
             InitializeComponent();
         }
-
-        private void GetSites()
-        {
-            sites = ActiveDirectory.ListOU(domain);            
-        }
-        
+                
         // Executes when the login button is clicked.
         // It connects to the database and checks if the user exists.
         private void btnLogin_Click(object sender, EventArgs e)
@@ -38,18 +33,17 @@ namespace ITInventory
 
         private void cboDomain_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
-            
+            cboDomain.Enabled = false;
+            cboSite.Items.Clear();
+            cboSite.Enabled = false;
+            picLoading.Visible = true;
+            bwSites.RunWorkerAsync();
         }
 
         private void bwSites_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            BackgroundWorker worker = sender as BackgroundWorker;
-
-            if (worker.CancellationPending == true)
-                e.Cancel = true;
-            else
-                GetSites();                
+            sites.Clear();            
+            sites = ActiveDirectory.ListOU(selectedDomain);
         }
 
         private void bwSites_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -63,6 +57,7 @@ namespace ITInventory
 
             cboSite.Enabled = true;
             picLoading.Visible = false;
+            cboDomain.Enabled = true;
         }
 
         private void FrmLogin_Load(object sender, EventArgs e)
@@ -72,11 +67,20 @@ namespace ITInventory
             cboSite.SelectedIndex = 0;
             picLoading.Visible = true;
 
-            if(DBConnection.Instance.DoesDatabaseExist())
+            cboDomain.Enabled = false;
+            
+            string[] domains = System.Configuration
+                .ConfigurationManager.AppSettings["domains"].Split(',');
+
+            foreach(string domain in domains)
+            {
+                cboDomain.Items.Add(domain);
+            }
+
+            if (DBConnection.Instance.DoesDatabaseExist())
             {
                 cboDomain.SelectedIndex = 0;
-                domain = cboDomain.Text;
-                bwSites.RunWorkerAsync();
+                selectedDomain = cboDomain.Text;
             }
             else
             {
@@ -87,7 +91,6 @@ namespace ITInventory
 
         private void FrmLogin_FormClosing(object sender, FormClosingEventArgs e)
         {
-            bwSites.CancelAsync();
         }
 
         private void bwLogin_DoWork(object sender, DoWorkEventArgs e)

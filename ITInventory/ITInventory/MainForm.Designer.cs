@@ -46,6 +46,8 @@
             this.mnuAddParameter = new System.Windows.Forms.MenuItem();
             this.mnuEditParameter = new System.Windows.Forms.MenuItem();
             this.mnuPreventiveMaintenance = new System.Windows.Forms.MenuItem();
+            this.mnuTools = new System.Windows.Forms.MenuItem();
+            this.mnuSetAssetTagBIOS = new System.Windows.Forms.MenuItem();
             this.bwBrand = new System.ComponentModel.BackgroundWorker();
             this.bwModel = new System.ComponentModel.BackgroundWorker();
             this.bwAdd = new System.ComponentModel.BackgroundWorker();
@@ -116,7 +118,8 @@
             this.mnuMain.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.mnuInventory,
             this.mnuDatabase,
-            this.mnuPreventiveMaintenance});
+            this.mnuPreventiveMaintenance,
+            this.mnuTools});
             // 
             // mnuInventory
             // 
@@ -228,6 +231,19 @@
             this.mnuPreventiveMaintenance.Text = "Preventive Maintenance";
             this.mnuPreventiveMaintenance.Click += new System.EventHandler(this.mnuPreventiveMaintenance_Click);
             // 
+            // mnuTools
+            // 
+            this.mnuTools.Index = 3;
+            this.mnuTools.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mnuSetAssetTagBIOS});
+            this.mnuTools.Text = "Tools";
+            // 
+            // mnuSetAssetTagBIOS
+            // 
+            this.mnuSetAssetTagBIOS.Index = 0;
+            this.mnuSetAssetTagBIOS.Text = "Set Asset Tag In BIOS";
+            this.mnuSetAssetTagBIOS.Click += new System.EventHandler(this.mnuSetAssetTagBIOS_Click);
+            // 
             // bwBrand
             // 
             this.bwBrand.WorkerReportsProgress = true;
@@ -304,7 +320,7 @@
             // 
             this.picLoadingModel.BackColor = System.Drawing.Color.Transparent;
             this.picLoadingModel.Image = ((System.Drawing.Image)(resources.GetObject("picLoadingModel.Image")));
-            this.picLoadingModel.Location = new System.Drawing.Point(168, 240);
+            this.picLoadingModel.Location = new System.Drawing.Point(168, 248);
             this.picLoadingModel.Name = "picLoadingModel";
             this.picLoadingModel.Size = new System.Drawing.Size(40, 40);
             this.picLoadingModel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -316,7 +332,7 @@
             // 
             this.picLoadingBrand.BackColor = System.Drawing.Color.Transparent;
             this.picLoadingBrand.Image = ((System.Drawing.Image)(resources.GetObject("picLoadingBrand.Image")));
-            this.picLoadingBrand.Location = new System.Drawing.Point(168, 192);
+            this.picLoadingBrand.Location = new System.Drawing.Point(168, 200);
             this.picLoadingBrand.Name = "picLoadingBrand";
             this.picLoadingBrand.Size = new System.Drawing.Size(40, 40);
             this.picLoadingBrand.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -341,7 +357,7 @@
             this.btnAutoCollect.Name = "btnAutoCollect";
             this.btnAutoCollect.Size = new System.Drawing.Size(245, 40);
             this.btnAutoCollect.TabIndex = 87;
-            this.btnAutoCollect.Text = "Magical Button";
+            this.btnAutoCollect.Text = "Auto Collect";
             this.btnAutoCollect.UseVisualStyleBackColor = true;
             this.btnAutoCollect.Visible = false;
             this.btnAutoCollect.Click += new System.EventHandler(this.btnAutoCollect_Click);
@@ -633,9 +649,9 @@
             this.tabPreventiveMaintenance.Controls.Add(this.label13);
             this.tabPreventiveMaintenance.Controls.Add(this.label14);
             this.tabPreventiveMaintenance.Controls.Add(this.lblUsernameGoal);
-            this.tabPreventiveMaintenance.Location = new System.Drawing.Point(4, 38);
+            this.tabPreventiveMaintenance.Location = new System.Drawing.Point(4, 29);
             this.tabPreventiveMaintenance.Name = "tabPreventiveMaintenance";
-            this.tabPreventiveMaintenance.Size = new System.Drawing.Size(958, 658);
+            this.tabPreventiveMaintenance.Size = new System.Drawing.Size(958, 667);
             this.tabPreventiveMaintenance.TabIndex = 2;
             this.tabPreventiveMaintenance.Text = "Preventive Maintenance";
             this.tabPreventiveMaintenance.UseVisualStyleBackColor = true;
@@ -941,6 +957,8 @@
         private TablessControl tablessControl1;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.MenuItem mnuTools;
+        private System.Windows.Forms.MenuItem mnuSetAssetTagBIOS;
     }
 }
 

@@ -35,3 +35,4 @@ C:\Users\juanc\Documents\GitHub\Celestica_ITInventory\ITInventory\ITInventory\ob
 C:\Users\juanc\Documents\GitHub\Celestica_ITInventory\ITInventory\ITInventory\obj\Debug\ITInventory.FrmParameters.resources
 C:\Users\juanc\Documents\GitHub\Celestica_ITInventory\ITInventory\ITInventory\obj\Debug\ITInventory.csproj.GenerateResource.Cache
 C:\Users\juanc\Documents\GitHub\Celestica_ITInventory\ITInventory\ITInventory\obj\Debug\ITInventory.FrmDatabaseSetUp.resources
+C:\Users\juanc\Documents\GitHub\Celestica_ITInventory\ITInventory\ITInventory\obj\Debug\ITInventory.FrmSetAssetTag.resources

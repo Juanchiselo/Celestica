@@ -87,8 +87,9 @@ namespace ITInventory
                 searcher.SearchScope = SearchScope.OneLevel;
                 searcher.PropertiesToLoad.Add("ou");
                 searcher.Filter = "(objectCategory=organizationalUnit)";
-
+                
                 var result = searcher.FindAll();
+                
                 foreach (SearchResult entry in result)
                 {
                     ous.Add(entry.GetDirectoryEntry().Properties["ou"][0].ToString());

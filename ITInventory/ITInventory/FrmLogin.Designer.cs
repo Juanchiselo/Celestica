@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmLogin));
-            this.bwSites = new System.ComponentModel.BackgroundWorker();
             this.lblUsernameLogin = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.lblPasswordLogin = new System.Windows.Forms.Label();
@@ -42,16 +41,10 @@
             this.cboSite = new System.Windows.Forms.ComboBox();
             this.bwLogin = new System.ComponentModel.BackgroundWorker();
             this.picLoading = new System.Windows.Forms.PictureBox();
+            this.bwSites = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             this.SuspendLayout();
-            // 
-            // bwSites
-            // 
-            this.bwSites.WorkerReportsProgress = true;
-            this.bwSites.WorkerSupportsCancellation = true;
-            this.bwSites.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwSites_DoWork);
-            this.bwSites.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwSites_RunWorkerCompleted);
             // 
             // lblUsernameLogin
             // 
@@ -134,8 +127,6 @@
             // 
             this.cboDomain.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboDomain.FormattingEnabled = true;
-            this.cboDomain.Items.AddRange(new object[] {
-            "americas.ad.celestica.com"});
             this.cboDomain.Location = new System.Drawing.Point(104, 424);
             this.cboDomain.Name = "cboDomain";
             this.cboDomain.Size = new System.Drawing.Size(280, 37);
@@ -184,6 +175,11 @@
             this.picLoading.TabStop = false;
             this.picLoading.Visible = false;
             // 
+            // bwSites
+            // 
+            this.bwSites.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwSites_DoWork);
+            this.bwSites.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwSites_RunWorkerCompleted);
+            // 
             // FrmLogin
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -219,7 +215,6 @@
         }
 
         #endregion
-        private System.ComponentModel.BackgroundWorker bwSites;
         private System.Windows.Forms.Label lblUsernameLogin;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label lblPasswordLogin;
@@ -232,5 +227,6 @@
         public System.Windows.Forms.ComboBox cboSite;
         private System.ComponentModel.BackgroundWorker bwLogin;
         public System.Windows.Forms.PictureBox picLoading;
+        private System.ComponentModel.BackgroundWorker bwSites;
     }
 }

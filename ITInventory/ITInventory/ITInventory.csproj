@@ -88,6 +88,12 @@
     <Compile Include="FrmDatabaseSetUp.Designer.cs">
       <DependentUpon>FrmDatabaseSetUp.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmSetAssetTag.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmSetAssetTag.Designer.cs">
+      <DependentUpon>FrmSetAssetTag.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -146,6 +152,9 @@
     <EmbeddedResource Include="FrmDatabaseSetUp.resx">
       <DependentUpon>FrmDatabaseSetUp.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmSetAssetTag.resx">
+      <DependentUpon>FrmSetAssetTag.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -199,7 +208,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CLS Fireball Logo.ico" />
-    <Content Include="CLS-Fireball-Logo.gif" />
     <Content Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
