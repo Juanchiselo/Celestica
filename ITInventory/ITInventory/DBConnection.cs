@@ -335,6 +335,7 @@ public sealed class DBConnection
                 + "osID INT(11) NOT NULL, "
                 + "pcID VARCHAR(50) NOT NULL, "
                 + "belongsTo VARCHAR(50) NOT NULL, "
+                + "userID INT(11) NOT NULL, "
                 + "editedBy INT(11) NOT NULL, "
                 + "comment TEXT, "
                 + "hasMouse TINYINT(1), "
@@ -343,6 +344,28 @@ public sealed class DBConnection
                 + "hasCamera TINYINT(1), "
                 + "hasPSU TINYINT(1), "
                 + "hasDockingStation TINYINT(1));";
+            command.ExecuteNonQuery();
+
+            command.CommandText = "CREATE TABLE IF NOT EXISTS tblPM "
+               + "(pmID INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+               + "locationID INT(11) NOT NULL, "
+               + "pcID VARCHAR(50) NOT NULL, "
+               + "ticketNumber VARCHAR(50), "
+               + "userID INT(11) NOT NULL, "
+               + "commentCategory VARCHAR(50), "
+               + "comment TEXT, "
+               + "isValidComputerName TINYINT(1), "
+               + "isConnectedToNetwork TINYINT(1), "
+               + "hasMcafee TINYINT(1), "
+               + "hasViperLink TINYINT(1), "
+               + "hasChrome TINYINT(1), "
+               + "isMouseWorking TINYINT(1), "
+               + "isKeyboardWorking TINYINT(1), "
+               + "isScannerWorking TINYINT(1), "
+               + "hasNewpassSticker TINYINT(1), "
+               + "hasPCIDSticker TINYINT(1), "
+               + "didCleanWorkstation TINYINT(1), "
+               + "didCableManagement TINYINT(1));";
             command.ExecuteNonQuery();
         }
         catch (MySqlException exception)

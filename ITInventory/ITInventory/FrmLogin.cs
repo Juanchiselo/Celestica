@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Data;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Security.Cryptography;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -22,27 +20,44 @@ namespace ITInventory
         {
             InitializeComponent();
         }
-                
-        // Executes when the login button is clicked.
-        // It connects to the database and checks if the user exists.
-        private void btnLogin_Click(object sender, EventArgs e)
+
+        private void FrmLogin_Load(object sender, EventArgs e)
         {
-            this.Cursor = Cursors.WaitCursor;
-            bwLogin.RunWorkerAsync();
+            // Splits the comma delimited values for the domain key,
+            // and saves each entry into the domains array.
+            string[] domains = System.Configuration
+                .ConfigurationManager.AppSettings["domains"].Split(',');
+
+            // Adds each domain to the domain combobox.
+            foreach (string domain in domains)
+                cboDomain.Items.Add(domain);
+
+            // Selects the first value for the key.
+            cboDomain.SelectedIndex = 0;
+            selectedDomain = cboDomain.Text;
         }
 
         private void cboDomain_SelectedIndexChanged(object sender, EventArgs e)
         {
             cboDomain.Enabled = false;
             cboSite.Items.Clear();
+            cboSite.Items.Add("Loading...");
+            cboSite.SelectedIndex = 0;
             cboSite.Enabled = false;
             picLoading.Visible = true;
             bwSites.RunWorkerAsync();
         }
 
-        private void bwSites_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        private void btnLogin_Click(object sender, EventArgs e)
         {
-            sites.Clear();            
+            this.Cursor = Cursors.WaitCursor;
+            bwLogin.RunWorkerAsync();
+        }
+        
+        #region Background Workers
+
+        private void bwSites_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {          
             sites = ActiveDirectory.ListOU(selectedDomain);
         }
 
@@ -55,42 +70,9 @@ namespace ITInventory
             for (int i = 0; i < sites.Count; i++)
                 cboSite.Items.Add(sites[i]);
 
-            cboSite.Enabled = true;
             picLoading.Visible = false;
+            cboSite.Enabled = true;
             cboDomain.Enabled = true;
-        }
-
-        private void FrmLogin_Load(object sender, EventArgs e)
-        {
-            cboSite.Enabled = false;
-            cboSite.Items.Add("Loading...");
-            cboSite.SelectedIndex = 0;
-            picLoading.Visible = true;
-
-            cboDomain.Enabled = false;
-            
-            string[] domains = System.Configuration
-                .ConfigurationManager.AppSettings["domains"].Split(',');
-
-            foreach(string domain in domains)
-            {
-                cboDomain.Items.Add(domain);
-            }
-
-            if (DBConnection.Instance.DoesDatabaseExist())
-            {
-                cboDomain.SelectedIndex = 0;
-                selectedDomain = cboDomain.Text;
-            }
-            else
-            {
-                MessageBox.Show("The database does not exist.\n"
-                    + "Please log in with the local user.");
-            }
-        }
-
-        private void FrmLogin_FormClosing(object sender, FormClosingEventArgs e)
-        {
         }
 
         private void bwLogin_DoWork(object sender, DoWorkEventArgs e)
@@ -104,7 +86,7 @@ namespace ITInventory
             if (ActiveDirectory.Instance.Authenticate(txtUsername.Text, txtPassword.Text, cboDomain.Text)
                && dataTable.Rows.Count != 0
                || (txtUsername.Text.Equals(localUsername)
-               && (txtPassword.Text.Equals(localPassword))))
+               && txtPassword.Text.Equals(localPassword)))
             {
                 if (dataTable.Rows.Count != 0)
                 {
@@ -112,25 +94,24 @@ namespace ITInventory
 
                     // Creates an user object.
                     user = new User(data["username"].ToString(), data["firstName"].ToString(),
-                        data["lastName"].ToString(), (bool)data["isAdmin"],
-                        (int)data["userID"]);
+                        data["lastName"].ToString(), (bool)data["isAdmin"], (int)data["userID"]);
                 }
                 else
                     user = new User(txtUsername.Text, localUsername, "Celestica", true, 0);
 
                 // Instantiates the main form.
-                MainForm frmAdd = new MainForm();
-                frmAdd.user = user;
-                frmAdd.lblUsername.Text = user.FirstName + " " + user.LastName;
+                MainForm frmMain = new MainForm();
+                frmMain.user = user;
+                frmMain.lblUsername.Text = user.FirstName + " " + user.LastName;
 
                 if (user.IsAdmin)
                 {
-                    frmAdd.mnuDatabase.Visible = true;
-                    frmAdd.mnuPreventiveMaintenance.Visible = true;
+                    frmMain.mnuDatabase.Visible = true;
+                    frmMain.mnuPreventiveMaintenance.Visible = true;
                 }
 
                 this.Hide();
-                frmAdd.ShowDialog();
+                frmMain.ShowDialog();
                 this.Close();
             }
             else
@@ -139,5 +120,7 @@ namespace ITInventory
                 MessageBox.Show("ERROR: Wrong username or password.");
             }
         }
+
+        #endregion
     }
 }

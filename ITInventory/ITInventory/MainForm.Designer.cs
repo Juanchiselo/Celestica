@@ -89,12 +89,11 @@
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.checkedListBox2 = new System.Windows.Forms.CheckedListBox();
-            this.cboPCID = new System.Windows.Forms.ComboBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
-            this.comboBox9 = new System.Windows.Forms.ComboBox();
+            this.cboCategory = new System.Windows.Forms.ComboBox();
             this.label16 = new System.Windows.Forms.Label();
             this.cboLocationPM = new System.Windows.Forms.ComboBox();
             this.button3 = new System.Windows.Forms.Button();
@@ -102,6 +101,7 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.lblUsernameGoal = new System.Windows.Forms.Label();
+            this.txtPCIDPM = new System.Windows.Forms.TextBox();
             this.tabMenus.SuspendLayout();
             this.tabAdd.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLoadingModel)).BeginInit();
@@ -635,13 +635,13 @@
             // 
             // tabPreventiveMaintenance
             // 
+            this.tabPreventiveMaintenance.Controls.Add(this.txtPCIDPM);
             this.tabPreventiveMaintenance.Controls.Add(this.tablessControl1);
-            this.tabPreventiveMaintenance.Controls.Add(this.cboPCID);
             this.tabPreventiveMaintenance.Controls.Add(this.textBox4);
             this.tabPreventiveMaintenance.Controls.Add(this.textBox3);
             this.tabPreventiveMaintenance.Controls.Add(this.label17);
             this.tabPreventiveMaintenance.Controls.Add(this.button4);
-            this.tabPreventiveMaintenance.Controls.Add(this.comboBox9);
+            this.tabPreventiveMaintenance.Controls.Add(this.cboCategory);
             this.tabPreventiveMaintenance.Controls.Add(this.label16);
             this.tabPreventiveMaintenance.Controls.Add(this.cboLocationPM);
             this.tabPreventiveMaintenance.Controls.Add(this.button3);
@@ -649,9 +649,9 @@
             this.tabPreventiveMaintenance.Controls.Add(this.label13);
             this.tabPreventiveMaintenance.Controls.Add(this.label14);
             this.tabPreventiveMaintenance.Controls.Add(this.lblUsernameGoal);
-            this.tabPreventiveMaintenance.Location = new System.Drawing.Point(4, 29);
+            this.tabPreventiveMaintenance.Location = new System.Drawing.Point(4, 38);
             this.tabPreventiveMaintenance.Name = "tabPreventiveMaintenance";
-            this.tabPreventiveMaintenance.Size = new System.Drawing.Size(958, 667);
+            this.tabPreventiveMaintenance.Size = new System.Drawing.Size(958, 658);
             this.tabPreventiveMaintenance.TabIndex = 2;
             this.tabPreventiveMaintenance.Text = "Preventive Maintenance";
             this.tabPreventiveMaintenance.UseVisualStyleBackColor = true;
@@ -727,17 +727,6 @@
             this.checkedListBox2.Size = new System.Drawing.Size(384, 540);
             this.checkedListBox2.TabIndex = 74;
             // 
-            // cboPCID
-            // 
-            this.cboPCID.BackColor = System.Drawing.Color.White;
-            this.cboPCID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboPCID.FormattingEnabled = true;
-            this.cboPCID.Location = new System.Drawing.Point(192, 144);
-            this.cboPCID.Name = "cboPCID";
-            this.cboPCID.Size = new System.Drawing.Size(211, 37);
-            this.cboPCID.Sorted = true;
-            this.cboPCID.TabIndex = 82;
-            // 
             // textBox4
             // 
             this.textBox4.Location = new System.Drawing.Point(201, 206);
@@ -773,19 +762,19 @@
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
-            // comboBox9
+            // cboCategory
             // 
-            this.comboBox9.BackColor = System.Drawing.Color.White;
-            this.comboBox9.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox9.FormattingEnabled = true;
-            this.comboBox9.Items.AddRange(new object[] {
+            this.cboCategory.BackColor = System.Drawing.Color.White;
+            this.cboCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboCategory.FormattingEnabled = true;
+            this.cboCategory.Items.AddRange(new object[] {
             "Physical Damage",
             "Software Issue",
             "Other"});
-            this.comboBox9.Location = new System.Drawing.Point(179, 337);
-            this.comboBox9.Name = "comboBox9";
-            this.comboBox9.Size = new System.Drawing.Size(211, 37);
-            this.comboBox9.TabIndex = 78;
+            this.cboCategory.Location = new System.Drawing.Point(179, 337);
+            this.cboCategory.Name = "cboCategory";
+            this.cboCategory.Size = new System.Drawing.Size(211, 37);
+            this.cboCategory.TabIndex = 78;
             // 
             // label16
             // 
@@ -859,6 +848,13 @@
             this.lblUsernameGoal.TabIndex = 51;
             this.lblUsernameGoal.Text = "Jose Sandoval, You need 3 more for today.";
             // 
+            // txtPCIDPM
+            // 
+            this.txtPCIDPM.Location = new System.Drawing.Point(192, 144);
+            this.txtPCIDPM.Name = "txtPCIDPM";
+            this.txtPCIDPM.Size = new System.Drawing.Size(211, 35);
+            this.txtPCIDPM.TabIndex = 85;
+            // 
             // MainForm
             // 
             this.BackColor = System.Drawing.Color.White;
@@ -893,7 +889,7 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.ComboBox comboBox9;
+        private System.Windows.Forms.ComboBox cboCategory;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.CheckedListBox checkedListBox2;
         private System.Windows.Forms.CheckedListBox checkedListBox1;
@@ -953,12 +949,11 @@
         private System.ComponentModel.BackgroundWorker bwAdd;
         public System.Windows.Forms.PictureBox picLoadingModel;
         public System.Windows.Forms.PictureBox picLoadingBrand;
-        private System.Windows.Forms.ComboBox cboPCID;
         private TablessControl tablessControl1;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.MenuItem mnuTools;
         private System.Windows.Forms.MenuItem mnuSetAssetTagBIOS;
+        private System.Windows.Forms.TextBox txtPCIDPM;
     }
 }
-

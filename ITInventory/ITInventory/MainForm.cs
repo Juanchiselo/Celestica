@@ -10,6 +10,7 @@ namespace ITInventory
     public partial class MainForm : Form
     {
         DataTable dataTable = null;
+        DataRow dataRow = null;
         public User user = null;
         public string oldAssetTag = "";
         string query = null;
@@ -34,22 +35,21 @@ namespace ITInventory
         {
             InitializeComponent();
             instance = this;
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
             PopulateOptions();
-            
         }
 
         #region Menus
 
         private void mnuPreventiveMaintenance_Click(object sender, EventArgs e)
         {
+            cboLocationPM.Items.Clear();
             lblUsernameGoal.Text = lblUsername.Text + ", you need 3 more done for today.";
-            query = "SELECT location FROM tbllocation";
-
-            dataTable = DBConnection.Instance.Select(query);
-
-            for (int i = 0; i < dataTable.Rows.Count; i++)
-                cboLocationPM.Items.Add(dataTable.Rows[i].Field<string>(0));
-            
+            query = "SELECT location FROM tblLocation;";
+            PopulateComboBox(cboLocationPM, DBConnection.Instance.Select(query));
             tabMenus.SelectedTab = tabPreventiveMaintenance;
         }
 
@@ -58,9 +58,7 @@ namespace ITInventory
             FrmSetAssetTag frmSetAssetTag = new FrmSetAssetTag();
             frmSetAssetTag.ShowDialog();
         }
-
         
-
         private void mnuCreateUser_Click(object sender, EventArgs e)
         {
             frmUsers frmUsers = new frmUsers();
@@ -145,27 +143,23 @@ namespace ITInventory
 
         public void PopulateOptions()
         {
-            query = "SELECT type FROM tbltype";
+            query = "SELECT type FROM tblType;";
+            PopulateComboBox(cboType, DBConnection.Instance.Select(query));
 
-            dataTable = DBConnection.Instance.Select(query);
+            query = "SELECT location FROM tblLocation;";
+            PopulateComboBox(cboLocation, DBConnection.Instance.Select(query));
 
+            query = "SELECT os FROM tblOS;";
+            PopulateComboBox(cboOS, DBConnection.Instance.Select(query));
+        }
+
+        private void PopulateComboBox(ComboBox comboBox, DataTable dataTable)
+        {
             for (int i = 0; i < dataTable.Rows.Count; i++)
-                cboType.Items.Add(dataTable.Rows[i].Field<string>(0));
-
-            
-            query = "SELECT location FROM tbllocation";
-
-            dataTable = DBConnection.Instance.Select(query);
-
-            for (int i = 0; i < dataTable.Rows.Count; i++)
-                cboLocation.Items.Add(dataTable.Rows[i].Field<string>(0));
-
-            query = "SELECT os FROM tblos";
-
-            dataTable = DBConnection.Instance.Select(query);
-
-            for (int i = 0; i < dataTable.Rows.Count; i++)
-                cboOS.Items.Add(dataTable.Rows[i].Field<string>(0));
+            {
+                if (!dataTable.Rows[i].Field<string>(0).Equals(""))
+                    comboBox.Items.Add(dataTable.Rows[i].Field<string>(0));
+            }
         }
 
         private void UnpopulateOptions()
@@ -548,9 +542,7 @@ namespace ITInventory
         private void bwBrand_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
             cboBrand.Items.Clear();
-
-            for (int i = 0; i < dataTable.Rows.Count; i++)
-                cboBrand.Items.Add(dataTable.Rows[i].Field<string>(0));
+            PopulateComboBox(cboBrand, dataTable);
         }
 
         private void bwModel_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
@@ -569,26 +561,30 @@ namespace ITInventory
         private void bwModel_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
             cboModel.Items.Clear();
-
-            for (int i = 0; i < dataTable.Rows.Count; i++)
-                cboModel.Items.Add(dataTable.Rows[i].Field<string>(0));
+            PopulateComboBox(cboModel, dataTable);
         }
 
         private void cboLocationPM_SelectedIndexChanged(object sender, EventArgs e)
         {
+            txtPCIDPM.Text = "";
+            txtPCIDPM.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            txtPCIDPM.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            AutoCompleteStringCollection collection = new AutoCompleteStringCollection();
+     
             query = "SELECT pcid FROM tblInventory WHERE locationID = "
                 + "(SELECT locationID FROM tblLocation WHERE location='"
                 + cboLocationPM.Text + "');";
-
             dataTable = DBConnection.Instance.Select(query);
 
             for (int i = 0; i < dataTable.Rows.Count; i++)
             {
-                if(!dataTable.Rows[i].Field<string>(0).Equals(""))
-                    cboPCID.Items.Add(dataTable.Rows[i].Field<string>(0));
+                if (!dataTable.Rows[i].Field<string>(0).Equals(""))
+                    collection.Add(dataTable.Rows[i].Field<string>(0));
             }
+
+            txtPCIDPM.AutoCompleteCustomSource = collection;
         }
-        
+
         
     }
 
