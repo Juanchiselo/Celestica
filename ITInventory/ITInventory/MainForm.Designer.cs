@@ -37,6 +37,7 @@
             this.mnuView = new System.Windows.Forms.MenuItem();
             this.mnuCheckAssetTag = new System.Windows.Forms.MenuItem();
             this.mnuSearch = new System.Windows.Forms.MenuItem();
+            this.mnuCreateMasterPalletSheet = new System.Windows.Forms.MenuItem();
             this.mnuDatabase = new System.Windows.Forms.MenuItem();
             this.mnuDatabaseSetUp = new System.Windows.Forms.MenuItem();
             this.menuItem11 = new System.Windows.Forms.MenuItem();
@@ -84,6 +85,7 @@
             this.lblPCID = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabPreventiveMaintenance = new System.Windows.Forms.TabPage();
+            this.txtPCIDPM = new System.Windows.Forms.TextBox();
             this.tablessControl1 = new ITInventory.TablessControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
@@ -101,7 +103,7 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.lblUsernameGoal = new System.Windows.Forms.Label();
-            this.txtPCIDPM = new System.Windows.Forms.TextBox();
+            this.mnuAbout = new System.Windows.Forms.MenuItem();
             this.tabMenus.SuspendLayout();
             this.tabAdd.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLoadingModel)).BeginInit();
@@ -119,7 +121,8 @@
             this.mnuInventory,
             this.mnuDatabase,
             this.mnuPreventiveMaintenance,
-            this.mnuTools});
+            this.mnuTools,
+            this.mnuAbout});
             // 
             // mnuInventory
             // 
@@ -129,7 +132,8 @@
             this.mnuBulkAdd,
             this.mnuView,
             this.mnuCheckAssetTag,
-            this.mnuSearch});
+            this.mnuSearch,
+            this.mnuCreateMasterPalletSheet});
             this.mnuInventory.Text = "Inventory";
             // 
             // mnuAdd
@@ -163,9 +167,16 @@
             // mnuSearch
             // 
             this.mnuSearch.Index = 4;
-            this.mnuSearch.Shortcut = System.Windows.Forms.Shortcut.CtrlS;
+            this.mnuSearch.Shortcut = System.Windows.Forms.Shortcut.CtrlShiftS;
             this.mnuSearch.Text = "Search";
             this.mnuSearch.Click += new System.EventHandler(this.mnuSearch_Click);
+            // 
+            // mnuCreateMasterPalletSheet
+            // 
+            this.mnuCreateMasterPalletSheet.Index = 5;
+            this.mnuCreateMasterPalletSheet.Shortcut = System.Windows.Forms.Shortcut.CtrlShiftM;
+            this.mnuCreateMasterPalletSheet.Text = "Create Master Pallet Sheet";
+            this.mnuCreateMasterPalletSheet.Click += new System.EventHandler(this.mnuCreateMasterPalletSheet_Click);
             // 
             // mnuDatabase
             // 
@@ -656,11 +667,18 @@
             this.tabPreventiveMaintenance.Text = "Preventive Maintenance";
             this.tabPreventiveMaintenance.UseVisualStyleBackColor = true;
             // 
+            // txtPCIDPM
+            // 
+            this.txtPCIDPM.Location = new System.Drawing.Point(192, 144);
+            this.txtPCIDPM.Name = "txtPCIDPM";
+            this.txtPCIDPM.Size = new System.Drawing.Size(211, 35);
+            this.txtPCIDPM.TabIndex = 85;
+            // 
             // tablessControl1
             // 
             this.tablessControl1.Controls.Add(this.tabPage3);
             this.tablessControl1.Controls.Add(this.tabPage4);
-            this.tablessControl1.Location = new System.Drawing.Point(544, 72);
+            this.tablessControl1.Location = new System.Drawing.Point(528, 40);
             this.tablessControl1.Name = "tablessControl1";
             this.tablessControl1.SelectedIndex = 0;
             this.tablessControl1.Size = new System.Drawing.Size(376, 536);
@@ -674,7 +692,7 @@
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage3.Size = new System.Drawing.Size(368, 494);
             this.tabPage3.TabIndex = 0;
-            this.tabPage3.Text = "tabPage3";
+            this.tabPage3.Text = "Desktop Activities";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // checkedListBox1
@@ -708,7 +726,7 @@
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage4.Size = new System.Drawing.Size(368, 503);
             this.tabPage4.TabIndex = 1;
-            this.tabPage4.Text = "tabPage4";
+            this.tabPage4.Text = "Printer Activities";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // checkedListBox2
@@ -754,9 +772,9 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(584, 608);
+            this.button4.Location = new System.Drawing.Point(592, 592);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(245, 32);
+            this.button4.Size = new System.Drawing.Size(245, 48);
             this.button4.TabIndex = 79;
             this.button4.Text = "Comment History";
             this.button4.UseVisualStyleBackColor = true;
@@ -767,10 +785,6 @@
             this.cboCategory.BackColor = System.Drawing.Color.White;
             this.cboCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboCategory.FormattingEnabled = true;
-            this.cboCategory.Items.AddRange(new object[] {
-            "Physical Damage",
-            "Software Issue",
-            "Other"});
             this.cboCategory.Location = new System.Drawing.Point(179, 337);
             this.cboCategory.Name = "cboCategory";
             this.cboCategory.Size = new System.Drawing.Size(211, 37);
@@ -802,7 +816,7 @@
             // 
             this.button3.Location = new System.Drawing.Point(96, 592);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(245, 32);
+            this.button3.Size = new System.Drawing.Size(245, 40);
             this.button3.TabIndex = 62;
             this.button3.Text = "Submit";
             this.button3.UseVisualStyleBackColor = true;
@@ -848,17 +862,16 @@
             this.lblUsernameGoal.TabIndex = 51;
             this.lblUsernameGoal.Text = "Jose Sandoval, You need 3 more for today.";
             // 
-            // txtPCIDPM
+            // mnuAbout
             // 
-            this.txtPCIDPM.Location = new System.Drawing.Point(192, 144);
-            this.txtPCIDPM.Name = "txtPCIDPM";
-            this.txtPCIDPM.Size = new System.Drawing.Size(211, 35);
-            this.txtPCIDPM.TabIndex = 85;
+            this.mnuAbout.Index = 4;
+            this.mnuAbout.Text = "About";
+            this.mnuAbout.Click += new System.EventHandler(this.mnuAbout_Click);
             // 
             // MainForm
             // 
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(928, 709);
+            this.ClientSize = new System.Drawing.Size(928, 654);
             this.Controls.Add(this.tabMenus);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -955,5 +968,7 @@
         private System.Windows.Forms.MenuItem mnuTools;
         private System.Windows.Forms.MenuItem mnuSetAssetTagBIOS;
         private System.Windows.Forms.TextBox txtPCIDPM;
+        private System.Windows.Forms.MenuItem mnuCreateMasterPalletSheet;
+        private System.Windows.Forms.MenuItem mnuAbout;
     }
 }

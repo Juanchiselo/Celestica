@@ -82,6 +82,18 @@
       <DependentUpon>CreateUser.cs</DependentUpon>
     </Compile>
     <Compile Include="DBConnection.cs" />
+    <Compile Include="FrmAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAbout.Designer.cs">
+      <DependentUpon>FrmAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCreateMasterPalletSheet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCreateMasterPalletSheet.Designer.cs">
+      <DependentUpon>FrmCreateMasterPalletSheet.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmDatabaseSetUp.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -148,6 +160,12 @@
     <Compile Include="User.cs" />
     <EmbeddedResource Include="CreateUser.resx">
       <DependentUpon>CreateUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAbout.resx">
+      <DependentUpon>FrmAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCreateMasterPalletSheet.resx">
+      <DependentUpon>FrmCreateMasterPalletSheet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmDatabaseSetUp.resx">
       <DependentUpon>FrmDatabaseSetUp.cs</DependentUpon>

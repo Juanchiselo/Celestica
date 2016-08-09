@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Management;
+using System.Collections.Generic;
 
 namespace ITInventory
 {
@@ -40,6 +41,8 @@ namespace ITInventory
         private void MainForm_Load(object sender, EventArgs e)
         {
             PopulateOptions();
+            string[] categories = System.Configuration
+                .ConfigurationManager.AppSettings["Categories"].Split(',');
         }
 
         #region Menus
@@ -77,8 +80,7 @@ namespace ITInventory
                     tabUsers = (TablessControl) control;
                 }
             }
-
-
+            
             tabUsers.SelectedTab = tabUsers.TabPages["tabSearchUser"];
             frmUsers.ShowDialog();
         }
@@ -585,7 +587,17 @@ namespace ITInventory
             txtPCIDPM.AutoCompleteCustomSource = collection;
         }
 
-        
+        private void mnuCreateMasterPalletSheet_Click(object sender, EventArgs e)
+        {
+            FrmCreateMasterPalletSheet frmCreateMasterPalletSheet = new FrmCreateMasterPalletSheet();
+            frmCreateMasterPalletSheet.ShowDialog();
+        }
+
+        private void mnuAbout_Click(object sender, EventArgs e)
+        {
+            FrmAbout frmAbout = new FrmAbout();
+            frmAbout.ShowDialog();
+        }
     }
 
     public class TablessControl : TabControl
