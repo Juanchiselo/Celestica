@@ -11,6 +11,9 @@ namespace ITInventory
 {
     public partial class FrmViewDatabase : Form
     {
+        BindingSource bindingSource = new BindingSource();
+        DataTable dataTable = new DataTable();
+
         public FrmViewDatabase()
         {
             InitializeComponent();
@@ -18,7 +21,8 @@ namespace ITInventory
 
         private void FrmViewDatabase_Load(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = DBConnection.Instance.ViewTable("tblinventory");
+            dataTable = DBConnection.Instance.ViewTable("tblinventory");
+            dataGridView1.DataSource = dataTable;
 
             dataGridView1.RowHeadersWidth = 70;
 
@@ -103,6 +107,16 @@ namespace ITInventory
             mainForm.btnClear.Visible = false;
             mainForm.btnUpdate.Visible = true;
             this.Close();
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            if(!cboSearchParameter.Text.Equals(""))
+            {
+                dataTable.DefaultView.RowFilter = string.Format("[{0}] LIKE '%{1}%'", cboSearchParameter.Text, txtSearch.Text);
+                dataGridView1.Refresh();
+            }
+            
         }
     }
 }

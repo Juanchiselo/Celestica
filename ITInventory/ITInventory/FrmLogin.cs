@@ -10,8 +10,8 @@ namespace ITInventory
     public partial class FrmLogin : Form
     {
         User user;
-        string localUsername = System.Configuration.ConfigurationManager.AppSettings["localUsername"];
-        string localPassword = System.Configuration.ConfigurationManager.AppSettings["localPassword"];
+        string localUsername;
+        string localPassword;
         List<string> sites = new List<string>();
         string selectedDomain = "";
         DataTable dataTable = null;
@@ -23,35 +23,46 @@ namespace ITInventory
 
         private void FrmLogin_Load(object sender, EventArgs e)
         {
+            // Loads the settings from the appconfig file.
+            localUsername = System.Configuration.ConfigurationManager
+                .AppSettings["localUsername"];
+
+            localPassword = System.Configuration.ConfigurationManager
+                .AppSettings["localPassword"];
+
             // Splits the comma delimited values for the domain key,
             // and saves each entry into the domains array.
-            string[] domains = System.Configuration
-                .ConfigurationManager.AppSettings["domains"].Split(',');
+            List<string> domains = new List<string>(System.Configuration
+                .ConfigurationManager.AppSettings["domains"].Split(','));
 
             // Adds each domain to the domain combobox.
-            foreach (string domain in domains)
-                cboDomain.Items.Add(domain);
+            GUIManager.Instance.PopulateComboBox(cboDomain, domains);
 
             // Selects the first value for the key.
             cboDomain.SelectedIndex = 0;
-            selectedDomain = cboDomain.Text;
         }
 
         private void cboDomain_SelectedIndexChanged(object sender, EventArgs e)
         {
             cboDomain.Enabled = false;
-            cboSite.Items.Clear();
-            cboSite.Items.Add("Loading...");
-            cboSite.SelectedIndex = 0;
-            cboSite.Enabled = false;
-            picLoading.Visible = true;
+            GUIManager.Instance.StartLoadingComboBox(cboSite, picLoading);
+            selectedDomain = cboDomain.Text;
             bwSites.RunWorkerAsync();
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            this.Cursor = Cursors.WaitCursor;
-            bwLogin.RunWorkerAsync();
+            if (!txtUsername.Text.Equals("")
+                && !txtPassword.Text.Equals("")
+                && !cboDomain.Text.Equals("")
+                && !cboSite.Text.Equals(""))
+            {
+                // Replace with logging in animation.
+                this.Cursor = Cursors.WaitCursor;
+                bwLogin.RunWorkerAsync();
+            }
+            else
+                MessageBox.Show("ERROR: Something is missing.");
         }
         
         #region Background Workers
@@ -63,15 +74,11 @@ namespace ITInventory
 
         private void bwSites_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            cboSite.Items.Clear();
-
             // Adds the sites found in the selected domain to
             // the Site combobox.
-            for (int i = 0; i < sites.Count; i++)
-                cboSite.Items.Add(sites[i]);
+            GUIManager.Instance.PopulateComboBox(cboSite, sites);
 
-            picLoading.Visible = false;
-            cboSite.Enabled = true;
+            GUIManager.Instance.StopLoadingComboBox(cboSite, picLoading);
             cboDomain.Enabled = true;
         }
 

@@ -15,10 +15,7 @@ public sealed class DBConnection
 
     public static DBConnection Instance
     {
-        get
-        {
-            return instance;
-        }
+        get { return instance; }
     }
 
 
@@ -209,9 +206,9 @@ public sealed class DBConnection
 
     }
 
-    public BindingSource ViewTable(string table)
+    public DataTable ViewTable(string table)
     {
-        BindingSource bindingSource = new BindingSource();
+        DataTable dataTable = new DataTable();
 
         if (this.OpenConnection())
         {
@@ -231,15 +228,13 @@ public sealed class DBConnection
             MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter();
             mySqlDataAdapter.SelectCommand = command;
 
-            DataTable dataTable = new DataTable();
-            mySqlDataAdapter.Fill(dataTable);
-
-            bindingSource.DataSource = dataTable;
             
+            mySqlDataAdapter.Fill(dataTable);
+                        
             this.CloseConnection();
         }
 
-        return bindingSource;
+        return dataTable;
     }
 
     public bool DoesDatabaseExist()

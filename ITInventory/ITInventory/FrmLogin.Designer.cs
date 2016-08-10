@@ -184,7 +184,7 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(463, 685);
+            this.ClientSize = new System.Drawing.Size(484, 685);
             this.Controls.Add(this.picLoading);
             this.Controls.Add(this.cboSite);
             this.Controls.Add(this.label1);

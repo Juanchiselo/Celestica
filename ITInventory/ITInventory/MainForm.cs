@@ -52,7 +52,7 @@ namespace ITInventory
             cboLocationPM.Items.Clear();
             lblUsernameGoal.Text = lblUsername.Text + ", you need 3 more done for today.";
             query = "SELECT location FROM tblLocation;";
-            PopulateComboBox(cboLocationPM, DBConnection.Instance.Select(query));
+            GUIManager.Instance.PopulateComboBox(cboLocationPM, DBConnection.Instance.Select(query));
             tabMenus.SelectedTab = tabPreventiveMaintenance;
         }
 
@@ -146,24 +146,15 @@ namespace ITInventory
         public void PopulateOptions()
         {
             query = "SELECT type FROM tblType;";
-            PopulateComboBox(cboType, DBConnection.Instance.Select(query));
+            GUIManager.Instance.PopulateComboBox(cboType, DBConnection.Instance.Select(query));
 
             query = "SELECT location FROM tblLocation;";
-            PopulateComboBox(cboLocation, DBConnection.Instance.Select(query));
+            GUIManager.Instance.PopulateComboBox(cboLocation, DBConnection.Instance.Select(query));
 
             query = "SELECT os FROM tblOS;";
-            PopulateComboBox(cboOS, DBConnection.Instance.Select(query));
+            GUIManager.Instance.PopulateComboBox(cboOS, DBConnection.Instance.Select(query));
         }
-
-        private void PopulateComboBox(ComboBox comboBox, DataTable dataTable)
-        {
-            for (int i = 0; i < dataTable.Rows.Count; i++)
-            {
-                if (!dataTable.Rows[i].Field<string>(0).Equals(""))
-                    comboBox.Items.Add(dataTable.Rows[i].Field<string>(0));
-            }
-        }
-
+        
         private void UnpopulateOptions()
         {
             cboType.Items.Clear();
@@ -224,17 +215,12 @@ namespace ITInventory
                 return;
 
             type = cboType.Text;
-            cboBrand.Enabled = false;
-            cboBrand.Items.Add("Loading...");
-            //cboBrand.SelectedIndex = 0;
-            picLoadingBrand.Visible = true;
-
+            GUIManager.Instance.StartLoadingComboBox(cboBrand, picLoadingBrand);
+      
             if (!cboType.Text.Equals(""))
                 bwBrand.RunWorkerAsync();
 
-
-            cboBrand.Enabled = true;
-            picLoadingBrand.Visible = false;
+            GUIManager.Instance.StopLoadingComboBox(cboBrand, picLoadingBrand);
             cboModel.Items.Clear();
         }
 
@@ -376,13 +362,8 @@ namespace ITInventory
 
         private void cboBrand_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cboModel.Items.Clear();
-            cboModel.Enabled = false;
-            cboModel.Items.Add("Loading...");
-            //cboModel.SelectedIndex = 0;
-            picLoadingModel.Visible = true;
-
-
+            GUIManager.Instance.StartLoadingComboBox(cboModel, picLoadingModel);
+       
             if (autoFilling)
                 return;
 
@@ -391,8 +372,7 @@ namespace ITInventory
             if (!cboBrand.Text.Equals("Loading..."))
                 bwModel.RunWorkerAsync();
 
-            cboModel.Enabled = true;
-            picLoadingModel.Visible = false;
+            GUIManager.Instance.StopLoadingComboBox(cboModel, picLoadingModel);
         }
 
         private void mnuView_Click(object sender, EventArgs e)
@@ -544,7 +524,7 @@ namespace ITInventory
         private void bwBrand_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
             cboBrand.Items.Clear();
-            PopulateComboBox(cboBrand, dataTable);
+            GUIManager.Instance.PopulateComboBox(cboBrand, dataTable);
         }
 
         private void bwModel_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
@@ -563,7 +543,7 @@ namespace ITInventory
         private void bwModel_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
             cboModel.Items.Clear();
-            PopulateComboBox(cboModel, dataTable);
+            GUIManager.Instance.PopulateComboBox(cboModel, dataTable);
         }
 
         private void cboLocationPM_SelectedIndexChanged(object sender, EventArgs e)

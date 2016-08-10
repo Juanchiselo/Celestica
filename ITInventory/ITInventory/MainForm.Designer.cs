@@ -36,7 +36,6 @@
             this.mnuBulkAdd = new System.Windows.Forms.MenuItem();
             this.mnuView = new System.Windows.Forms.MenuItem();
             this.mnuCheckAssetTag = new System.Windows.Forms.MenuItem();
-            this.mnuSearch = new System.Windows.Forms.MenuItem();
             this.mnuCreateMasterPalletSheet = new System.Windows.Forms.MenuItem();
             this.mnuDatabase = new System.Windows.Forms.MenuItem();
             this.mnuDatabaseSetUp = new System.Windows.Forms.MenuItem();
@@ -49,6 +48,7 @@
             this.mnuPreventiveMaintenance = new System.Windows.Forms.MenuItem();
             this.mnuTools = new System.Windows.Forms.MenuItem();
             this.mnuSetAssetTagBIOS = new System.Windows.Forms.MenuItem();
+            this.mnuAbout = new System.Windows.Forms.MenuItem();
             this.bwBrand = new System.ComponentModel.BackgroundWorker();
             this.bwModel = new System.ComponentModel.BackgroundWorker();
             this.bwAdd = new System.ComponentModel.BackgroundWorker();
@@ -103,7 +103,6 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.lblUsernameGoal = new System.Windows.Forms.Label();
-            this.mnuAbout = new System.Windows.Forms.MenuItem();
             this.tabMenus.SuspendLayout();
             this.tabAdd.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLoadingModel)).BeginInit();
@@ -132,7 +131,6 @@
             this.mnuBulkAdd,
             this.mnuView,
             this.mnuCheckAssetTag,
-            this.mnuSearch,
             this.mnuCreateMasterPalletSheet});
             this.mnuInventory.Text = "Inventory";
             // 
@@ -164,16 +162,9 @@
             this.mnuCheckAssetTag.Text = "Check Asset Tag";
             this.mnuCheckAssetTag.Click += new System.EventHandler(this.mnuCheckAssetTag_Click);
             // 
-            // mnuSearch
-            // 
-            this.mnuSearch.Index = 4;
-            this.mnuSearch.Shortcut = System.Windows.Forms.Shortcut.CtrlShiftS;
-            this.mnuSearch.Text = "Search";
-            this.mnuSearch.Click += new System.EventHandler(this.mnuSearch_Click);
-            // 
             // mnuCreateMasterPalletSheet
             // 
-            this.mnuCreateMasterPalletSheet.Index = 5;
+            this.mnuCreateMasterPalletSheet.Index = 4;
             this.mnuCreateMasterPalletSheet.Shortcut = System.Windows.Forms.Shortcut.CtrlShiftM;
             this.mnuCreateMasterPalletSheet.Text = "Create Master Pallet Sheet";
             this.mnuCreateMasterPalletSheet.Click += new System.EventHandler(this.mnuCreateMasterPalletSheet_Click);
@@ -254,6 +245,12 @@
             this.mnuSetAssetTagBIOS.Index = 0;
             this.mnuSetAssetTagBIOS.Text = "Set Asset Tag In BIOS";
             this.mnuSetAssetTagBIOS.Click += new System.EventHandler(this.mnuSetAssetTagBIOS_Click);
+            // 
+            // mnuAbout
+            // 
+            this.mnuAbout.Index = 4;
+            this.mnuAbout.Text = "About";
+            this.mnuAbout.Click += new System.EventHandler(this.mnuAbout_Click);
             // 
             // bwBrand
             // 
@@ -862,16 +859,10 @@
             this.lblUsernameGoal.TabIndex = 51;
             this.lblUsernameGoal.Text = "Jose Sandoval, You need 3 more for today.";
             // 
-            // mnuAbout
-            // 
-            this.mnuAbout.Index = 4;
-            this.mnuAbout.Text = "About";
-            this.mnuAbout.Click += new System.EventHandler(this.mnuAbout_Click);
-            // 
             // MainForm
             // 
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(928, 654);
+            this.ClientSize = new System.Drawing.Size(928, 691);
             this.Controls.Add(this.tabMenus);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -880,6 +871,7 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Celestica IT Inventory and Preventive Maintenance";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.tabMenus.ResumeLayout(false);
             this.tabAdd.ResumeLayout(false);
             this.tabAdd.PerformLayout();
@@ -934,7 +926,6 @@
         private System.Windows.Forms.MenuItem mnuView;
         private System.Windows.Forms.Label lblBelongsTo;
         private System.Windows.Forms.MenuItem mnuCheckAssetTag;
-        private System.Windows.Forms.MenuItem mnuSearch;
         public System.Windows.Forms.ComboBox cboType;
         public System.Windows.Forms.ComboBox cboOS;
         public System.Windows.Forms.ComboBox cboModel;
